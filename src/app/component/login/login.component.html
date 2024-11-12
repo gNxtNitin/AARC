@@ -1,0 +1,74 @@
+<div class="login-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 d-flex align-items-center w-25">
+                <a href="#">
+                    <img src="../../../assets/images/logo.png">
+                </a>
+            </div>
+            <div class="col-sm-8 p-3 w-75">
+                <div class="login-btns text-right">
+                    <ul>
+                        <li class="mr-3">
+                            <button (click)="loginButtonClick()" class="btn active d-sm-block d-none">Login</button>
+                        </li>
+                        <!-- <li>
+                            <button (click)="signUpButtonClick()" class="btn">Sign Up</button>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid h-100">
+    <div class="row justify-content-center align-items-center h-100 bg-white">
+        <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3 back-color d-flex flex-column justify-content-center ">
+            <form [formGroup]="loginForm" class="form-spacing w-100" (ngSubmit)="onSubmit()">
+                <div class="logoimg pb-5 text-center no-gutter">
+                    <img src="../../../assets/images/men.png">
+                </div>
+                <div class="form-block text-center pb-3">
+                    <h5>Login to your account</h5>
+                </div>
+                <div class="form-group pb-3 mb-0">
+                    <input type="text"
+                     formControlName="username"
+                     class="form-control"
+                     id="username"
+                     [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+                     placeholder="User name">
+                     <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                        <div *ngIf="f.username.errors.required">User name is required</div>
+                    </div>
+                </div>
+                <div class="form-group pb-2">
+                    <input [type]="hide ? 'password' : 'text'"
+                    formControlName="password"
+                     class="form-control"
+                     id="password"
+                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+                     placeholder="Password">
+                     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                        <div *ngIf="f.password.errors.required">Password is required</div>
+                    </div>
+                    <div style="margin-top: 10px"><input type="checkbox" (click)="showHidePassword()"> Show Password</div>
+                    
+                </div>
+
+               
+                <div class="form-group">
+                    <button class="btn btn-lg btn-block f-16">Login</button>
+                </div>
+                <div class="row login-page-links py-3">
+                    <!-- <div class="col-md-6 d-flex justify-content-start w-50">
+                        <a href="#">Back</a>
+                    </div> -->
+                    <div class="col-md-9 d-flex justify-content-end w-50">
+                        <a href="javascript: void(0)" (click)="forgetPassworkClick()">Forgot password?</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

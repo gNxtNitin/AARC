@@ -1,0 +1,293 @@
+
+<div class="row">
+    <div class="col-2">Team</div>
+    <div class="col-10">
+            <strong>
+              {{team['team_name']}}
+            </strong>
+            <button 
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+             style="margin-left: 10px ;"
+             (click)="Selectteam(selectteamTemplate)" 
+             class="action-btn"
+             >Select Team</button>
+            <button style="margin-left: 10px ;"
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+             (click)="OpenAddTeam(teamAddTemplate)"
+             class="action-btn">Add Team</button>    
+        </div>
+    </div>
+<div>
+    <!-- #1 row -->
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="TeamManagerClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Team Manager</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="TeamManagerClick()"><i
+                        [ngClass]="showTeamManager?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="(team|json) != ({} | json) && showTeamManager">
+            <button 
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            (click)="OpenAddManager(selectManagerTemplate)"
+            style="margin-left: 10px ;" 
+            class="action-btn">Add Manager</button>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showTeamManager?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-4">Delete</div>
+            </div>
+            <div class="row" *ngFor="let manager of teamManager">
+                <div class="col-md-8 col-sm-8 col-8">
+                    <div class="detail-1"> {{manager.first_name}} {{manager.middle_name}} {{manager.last_name}} </div>
+                </div>
+                <div class="col-4">
+                    <i (click)="DeleteManager(manager)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #2 row -->
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="showTeamBranchClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Team Branches</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link " (click)="showTeamBranchClick()"><i
+                        [ngClass]="showTeamBranchInfo?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showTeamBranchInfo?'show':'hide'">
+            <div>
+                <div class="row">
+                    <div class="col-1">
+                        <input type="checkbox" [checked]="isPersonalBranch" (change)="BranchChange($event,'P')" />
+                    </div>
+                    <div class="col-8">
+                       Personal
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1">
+                        <input type="checkbox"  [checked]="isCommercialBranch" (change)="BranchChange($event,'C')"  />
+                    </div>
+                    <div class="col-8">
+                       Commercial
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1">
+                        <input type="checkbox"  [checked]="isLifeHealth" (change)="BranchChange($event,'L')"  />
+                    </div>
+                    <div class="col-8">
+                       Life & Health
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #3 row -->
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="showTeamMemberClick()">
+            <div class="col-10">
+                <h5 class="d-inline-block m-0">Team Members</h5>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link " (click)="showTeamMemberClick()"><i
+                        [ngClass]="showTeamMemberInfo?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="(team|json) != ({} | json) && showTeamMemberInfo">
+            <button 
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+            (click)="OpenAddMember(selectMemberTemplate)"
+            style="margin-left: 10px ;" 
+            class="action-btn">Add Member</button>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showTeamMemberInfo?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-4">Delete</div>
+            </div>
+            <div class="row" *ngFor="let staff of teamStaff">
+                <div class="col-md-8 col-sm-8 col-8">
+                    <div class="detail-1"> {{staff.first_name}} {{staff.middle_name}} {{staff.last_name}} </div>
+                </div>
+                <div class="col-4">
+                    <i (click)="DeleteStaff(staff)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #4 row -->
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="showAgencyClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Agencies </h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link " (click)="showAgencyClick()"><i
+                        [ngClass]="showAgency?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+
+        <button  [ngClass]="showAgency?'show':'hide'"
+        (click)="OpenAddAgency(addAgencyTemplate)" *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+        class="action-btn producerCodeBtn" (clcik)="OpenAddAgency(addAgencyTemplate)">Add Agencies</button>
+       
+        <div class="x_content pt-3" [ngClass]="showAgency?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-4">Delete</div>
+            </div>
+            <div class="row" *ngFor="let agency of teamAgencies">
+                <div class="col-md-8 col-sm-8 col-8">
+                    <div class="detail-1"> {{agency.agency_name}} </div>
+                </div>
+                <div class="col-4">
+                    <i (click)="DeleteAgency(agency)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #selectteamTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Select Team</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <select class="form-control" [(ngModel)]="selectedTeam">
+            <option value="" disabled>Select Team</option>
+            <option *ngFor="let team of teams" [ngValue]="team.team_id">
+                {{team.team_name}}
+            </option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="TeamSelected()">Submit</button>
+       <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+    </div>
+ </ng-template>
+
+ <ng-template #teamAddTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add AA Resource Center Team</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addTeamForm" (ngSubmit)="submitAddTeam()">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="teamId" formControlName="teamId" placeholder="Team Id">
+                        <div *ngIf="addTeamSubmitted && f.teamId.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="f.teamId.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="teamName" formControlName="teamName" placeholder="Team Name">
+                        <div *ngIf="addTeamSubmitted && f.teamName.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="f.teamName.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" type="submit" class="btn btn-default">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+             </div>
+
+        </form>
+    </div>
+    
+ </ng-template>
+
+ <ng-template #addAgencyTemplate
+ template>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add Agency</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <select class="form-control" [(ngModel)]="selectedAgencyForAdd">
+                            <option value="" disabled>Select Agency</option>
+                            <option *ngFor="let agency of agencies" [ngValue]="agency.agency_id">
+                                {{agency.agency_name}}
+                            </option>
+                        </select>
+                        <div *ngIf="addAgencySubmitted && this.selectedAgencyForAdd == ''" style="display: block ;" class="invalid-feedback">
+                            <div>Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="AddTeamAgency()">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+             </div>
+    </div>
+    
+
+ </ng-template>
+
+ <ng-template #selectManagerTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add AA Resource Center Team Manager</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <select class="form-control" [(ngModel)]="selectedManager">
+            <option value="" disabled>Select User</option>
+            <option *ngFor="let manager of managerList" [ngValue]="manager.userid">
+                {{manager.first_name}} {{manager.middle_name}} {{manager.last_name}}
+            </option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="AddManager()">Submit</button>
+       <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+    </div>
+ </ng-template>
+ <ng-template #selectMemberTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add Team Members</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <select class="form-control" [(ngModel)]="selectedMember" multiple="true" style="height: 300px;">
+            <option value="" disabled>Select User</option>
+            <option *ngFor="let member of teamAvailableMembers" [ngValue]="member.userid">
+                {{member.first_name}} {{member.middle_name}} {{member.last_name}}
+            </option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="AddMember()">Submit</button>
+       <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+    </div>
+ </ng-template>
+ 

@@ -1,0 +1,75 @@
+<div class="col-md-3 col-sm-3 col-4 left_col">
+    <div class="left_col scroll-view ">
+        <div class="navbar nav_title pt-3" style="border: 0;">
+            <a href="javascript: void(0)" (click)="reloadPage()" class="site_title-1"><img
+                    src="../../../assets/images/logo.png"> </a>
+            <a href="javascript: void(0)" (click)="reloadPage()" class="site_title-2"><img
+                    src="../../../assets/images/A.png"> </a>
+        </div>
+        <div class="clearfix"></div>
+        <div class="nav toggle d-lg-block d-md-none py-4">
+            <a id="menu_toggle" (click)="toggleSideBar()" class=""><img src="../../../assets/images/toggle-btn.png"></a>
+        </div>
+        <!-- sidebar menu -->
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu  pt-5">
+            <div class="menu_section">
+                <ul class="nav side-menu">
+                    <li>
+                        <a routerLink="support" routerLinkActive="active">
+                        <img src="../../../assets/images/side-icon-5.png" class="mr-4"><span
+                        class="sidebar-main-text">Support</span></a>
+                    </li>
+                    <li>
+                        <a routerLink="user" routerLinkActive="active"><img
+                                src="../../../assets/images/side-icon-1.png" class="mr-4">
+                            <span class="sidebar-main-text">User Information</span>
+                        </a>
+                    </li>
+                    <li><a routerLink="agencyInfo" routerLinkActive="active"><img src="../../../assets/images/side-icon-3.png" class="mr-4"><span
+                        class="sidebar-main-text">Agency Information </span></a>
+                    </li>
+                    <li><a routerLink="carrierMaintainance" routerLinkActive="active"><img src="../../../assets/images/side-icon-5.png" class="mr-4"><span
+                        class="sidebar-main-text">Carrier Maintenance </span></a></li>
+                    <li><a routerLink="teamInfo" routerLinkActive="active">
+                            <img src="../../../assets/images/side-icon-2.png" class="mr-4"> <span
+                                class="sidebar-main-text">Team Information</span></a>
+                    </li>
+                    <li *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'PLAYER'"><a routerLink="agency-admin" routerLinkActive="active"><img src="../../../assets/images/side-icon-4.png" class="mr-4"><span
+                                class="sidebar-main-text">Agency Administrator </span></a>
+                    </li>
+                    <!-- <li><a routerLink="inventory" routerLinkActive="active"> <img src="../../../assets/images/side-icon-6.png" class="mr-4"><span
+                                class="sidebar-main-text">Inventory</span></a>
+                    </li> -->
+                    <li *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'PLAYER'"><a routerLink="document" routerLinkActive="active"> <img src="../../../assets/images/side-icon-6.png" class="mr-4"><span
+                        class="sidebar-main-text">Document</span></a>
+                    </li>
+                    <li *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'PLAYER'"><a routerLink="link" routerLinkActive="active"> <img src="../../../assets/images/side-icon-6.png" class="mr-4"><span
+                        class="sidebar-main-text">Link</span></a>
+                    </li>
+                    <!-- <li><a routerLink="guideline" routerLinkActive="active"> <img src="../../../assets/images/side-icon-6.png" class="mr-4"><span
+                        class="sidebar-main-text">Guideline</span></a>
+                    </li> -->
+                </ul>
+            </div>
+            <!-- <div class="menu_section">
+                <ul class="nav side-menu">
+                    <li><a><img src="../../../assets/images/side-icon-7.png" class="mr-4"><span
+                                class="sidebar-main-text">AARC Documents </span><span
+                                class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="e_commerce.html">E-commerce</a></li>
+                        </ul>
+                    </li>
+                    <li><a><img src="../../../assets/images/side-icon-8.png" class="mr-4"><span
+                                class="sidebar-main-text">AARC Links </span><span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="page_403.html">403 Error</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div> -->
+        </div>
+        <!-- /sidebar menu -->
+    </div>
+</div>

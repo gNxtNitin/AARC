@@ -1,0 +1,343 @@
+<div>
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="PhoneClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Phone</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="PhoneClick()"><i
+                        [ngClass]="showPhone?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="showPhone">
+            <button 
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            (click)="OpenAddPhone(PhoneAddTemplate)"
+            style="margin-left: 10px ;" 
+            class="action-btn">Add Phone</button>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showPhone?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-5">Display As</div>
+                <div class="col-5">Phone Number</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let phoneLink of phoneLinks">
+                <div class="col-md-5 col-sm-5 col-5">
+                    <div class="detail-1">{{phoneLink.display}}</div>
+                </div>
+                <div class="col-md-5 col-sm-5 col-5">
+                    <div class="detail-1">{{phoneLink.linx}}</div>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="DeleteLink(phoneLink)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="EmailClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Email</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="EmailClick()"><i
+                        [ngClass]="showEmail?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="showEmail">
+            <button 
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            (click)="OpenAddEmail(EmailAddTemplate)"
+            style="margin-left: 10px ;" 
+            class="action-btn">Add Email</button>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showEmail?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-5">Display As</div>
+                <div class="col-5">Email</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let phoneLink of emailLinks">
+                <div class="col-md-5 col-sm-5 col-5">
+                    <div class="detail-1">{{phoneLink.display}}</div>
+                </div>
+                <div class="col-md-5 col-sm-5 col-5">
+                    <div class="detail-1">{{phoneLink.linx}}</div>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="DeleteLink(phoneLink)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="WebClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Web</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="WebClick()"><i
+                        [ngClass]="showWeb?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="showWeb">
+            <button 
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            (click)="OpenAddWeb(WebAddTemplate)"
+            style="margin-left: 10px ;" 
+            class="action-btn">Add Web</button>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showWeb?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-5">Display As</div>
+                <div class="col-5">Web</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let phoneLink of webLinks">
+                <div class="col-md-5 col-sm-5 col-5">
+                    <div class="detail-1">{{phoneLink.display}}</div>
+                </div>
+                <div class="col-md-5 col-sm-5 col-5">
+                    <a class="detail-1" style="word-break: break-word" href="{{phoneLink.linx}}" target="_blank">{{phoneLink.linx}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="DeleteLink(phoneLink)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="PropertyClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Property Cards</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="PropertyClick()"><i
+                        [ngClass]="showProperty?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="showProperty">
+            <button 
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            (click)="OpenAddProperty(PropertyAddTemplate)"
+            style="margin-left: 10px ;" 
+            class="action-btn">Add Property Cards</button>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showProperty?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-5">Display As</div>
+                <div class="col-5">Property</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let phoneLink of propertyLinks">
+                <div class="col-md-5 col-sm-5 col-5">
+                    <div class="detail-1">{{phoneLink.display}}</div>
+                </div>
+                <div class="col-md-5 col-sm-5 col-5">
+                    <a class="detail-1" style="word-break: break-word" href="{{phoneLink.linx}}" target="_blank">{{phoneLink.linx}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"(click)="DeleteLink(phoneLink)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #PhoneAddTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add AARC Phone Link</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addPhoneForm" (ngSubmit)="submitAddPhone()">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="display" formControlName="display" placeholder="Display As">
+                        <div *ngIf="addPhoneSubmitted && addPhoneForm.controls.display.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="addPhoneForm.controls.display.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="Phone Number">
+                        <div *ngIf="addPhoneSubmitted && addPhoneForm.controls.phoneNumber.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="addPhoneForm.controls.phoneNumber.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <div class="col-8"> Add for All Agency Admins Users</div>
+                        <div class="col-4">
+                            <input style="height: 28px;margin-left: 155px;margin-top: -21px;" type="checkbox" class="form-control" id="isAll" formControlName="isAll" placeholder="isAll"> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" type="submit" class="btn btn-default">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+             </div>
+        </form>
+    </div>
+    
+ </ng-template>
+
+ <ng-template #EmailAddTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add AARC Email Link</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addEmailForm" (ngSubmit)="submitAddEmail()">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="display" formControlName="display" placeholder="Display As">
+                        <div *ngIf="addEmailSubmitted && addEmailForm.controls.display.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="addEmailForm.controls.display.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="email" formControlName="email" placeholder="Email">
+                        <div *ngIf="addEmailSubmitted && addEmailForm.controls.email.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="addEmailForm.controls.email.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <div class="col-8"> Add for All Agency Admins Users</div>
+                        <div class="col-4">
+                            <input style="height: 28px;margin-left: 155px;margin-top: -21px;" type="checkbox" class="form-control" id="isAll" formControlName="isAll" placeholder="isAll"> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" type="submit" class="btn btn-default">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+             </div>
+        </form>
+    </div>
+    
+ </ng-template>
+
+ <ng-template #WebAddTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add AARC Web Link</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addWebForm" (ngSubmit)="submitAddWeb()">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="display" formControlName="display" placeholder="Display As">
+                        <div *ngIf="addWebSubmitted && addWebForm.controls.display.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="addWebForm.controls.display.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="Web" formControlName="Web" placeholder="Web">
+                        <div *ngIf="addWebForm && addWebForm.controls.email.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="addWebForm.controls.email.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <div class="col-8"> Add for All Agency Admins Users</div>
+                        <div class="col-4">
+                            <input style="height: 28px;margin-left: 155px;margin-top: -21px;" type="checkbox" class="form-control" id="isAll" formControlName="isAll" placeholder="isAll"> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" type="submit" class="btn btn-default">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+             </div>
+        </form>
+    </div>
+    
+ </ng-template>
+
+ <ng-template #PropertyAddTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add AARC Property Link</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="addPropertyForm" (ngSubmit)="submitAddProperty()">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="display" formControlName="display" placeholder="Display As">
+                        <div *ngIf="addPropertySubmitted && addPropertyForm.controls.display.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="addPropertyForm.controls.display.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="property" formControlName="property" placeholder="Property">
+                        <div *ngIf="addPropertyForm && addPropertyForm.controls.Property.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="addPropertyForm.controls.Property.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <div class="col-8"> Add for All Agency Admins Users</div>
+                        <div class="col-4">
+                            <input style="height: 28px;margin-left: 155px;margin-top: -21px;" type="checkbox" class="form-control" id="isAll" formControlName="isAll" placeholder="isAll"> </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" type="submit" class="btn btn-default">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+             </div>
+        </form>
+    </div>
+    
+ </ng-template>

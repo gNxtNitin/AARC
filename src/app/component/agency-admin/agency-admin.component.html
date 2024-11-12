@@ -1,0 +1,769 @@
+<div class="row">
+    <div class="col-3">Selected Agency</div>
+    <div class="col-3">
+        <a (click)="EditAgency(selectedAgency)">
+            {{selectedAgency['agency_name']}}
+        </a>
+    </div>
+</div> 
+<div>
+    <!-- #1 row -->
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="AgencyInfoClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Employee Support</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="AgencyInfoClick()"><i
+                        [ngClass]="showAgencyInfo?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showAgencyInfo?'show':'hide'">
+            <div class="row" *ngIf="selectedAgency">
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                       Employee Support Link
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                   <a href="https://www.agencyadministrators.com/employee-support/"  target="_blank">Link</a>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="selectedAgency">
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Download Resend Request 
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                   <a href="https://www.agencyadministrators.com/download-resend-request/"  target="_blank">Link</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="EventInfoClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Events</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="EventInfoClick()"><i
+                        [ngClass]="showEventInfo?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="showEventInfo">
+            <button 
+            (click)="openAddEvent(addEvent)"
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            style="margin-left: 10px ;" 
+            class="action-btn">Add Events</button>
+        </div>
+
+        <div class="x_content pt-3" [ngClass]="showEventInfo?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-10">Event</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let event of events">
+                <div class="col-md-10 col-sm-2 col-2">
+                    <div class="detail-1" [innerHTML]="event.newscontent"></div>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="DeleteEvent(event)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="NewsInfoClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">News</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="NewsInfoClick()"><i
+                        [ngClass]="showNewsInfo?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="showNewsInfo">
+            <button 
+            (click)="openAddnews(addNews)"
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            style="margin-left: 10px ;" 
+            class="action-btn">Add News</button>
+        </div>
+
+        <div class="x_content pt-3" [ngClass]="showNewsInfo?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-10">News</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let new of news">
+                <div class="col-md-10 col-sm-2 col-2">
+                    <div class="detail-1" [innerHTML]="new.newscontent"></div>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="DeleteEvent(new)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="TickerInfoClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">What is going on</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="TickerInfoClick()"><i
+                        [ngClass]="showTickerInfo?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="showTickerInfo">
+            <button 
+            (click)="openAddTicker(addTicker)"
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            style="margin-left: 10px ;" 
+            class="action-btn">Add Ticker</button>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showTickerInfo?'show':'hide'">
+            <div class="row detail-2 contact-header" *ngIf="selectedAgency">
+                    <div class="col-7">Ticker</div>
+                    <div class="col-3">Agency Name</div>
+                    <div class="col-2"><span style="float: right;">Delete</span></div>
+            </div>
+            <div class="row" *ngFor="let ticker of tickers">
+                <div class="col-7">
+                      <span class="detail-1">{{ticker['aarc_value']}} (Expires: {{ticker['aarc_desc']}})</span>  
+                </div>
+                <div class="col-3 detail-1">
+                   <span>{{ticker['agency_name']}}</span> 
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="DeleteTicker(ticker)" 
+                     style="float: right;"
+                    class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="OfficeClosuresClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Office Closures</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link " (click)="OfficeClosuresClick()"><i
+                        [ngClass]="showOfficeClosures?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="showOfficeClosures">
+            <button 
+            (click)="openAddHoliday(addHoliday)"
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            style="margin-left: 10px ;" 
+            class="action-btn">Add Holiday/Office Closure</button>
+        </div>
+
+        <div class="x_content pt-3" [ngClass]="showOfficeClosures?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-6">Reason</div>
+                <div class="col-4">Date</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let closure of agencyClosures">
+                <div class="col-md-6 col-sm-6 col-6">
+                    <div class="detail-1"> {{closure.aarc_desc}} </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-4">
+                    <div class="detail-1">{{closure.aarc_value |date }}</div>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="DeleteHoliday(closure)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <!-- #2 row -->
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="ContactInfoClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Contact Info</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link " (click)="ContactInfoClick()"><i
+                        [ngClass]="showContactInfo?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="showContactInfo">
+            <button 
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            style="margin-left: 10px ;" 
+            (click)="OpenAddContact(addAgencyContact)" 
+            class="action-btn">Edit Contact</button>
+        </div>
+        <div style="margin-left: 20px ;"
+        class="x_content row pt-3" [ngClass]="showContactInfo?'show':'hide'">
+           <div class="row">
+             <div class="col-2 detail-1">Address:</div>
+             <div class="col-10"><span>{{agencyContact.AA_Addr1}}</span></div>
+          </div>
+          <div class="row">
+            <div class="col-2 detail-1"></div>
+            <div class="col-10"><span>{{agencyContact.AA_Addr2}}</span></div>
+         </div>
+         <div class="row">
+            <div class="col-2 detail-1">City:</div>
+            <div class="col-10"><span>{{agencyContact.AA_Addr_City}}</span></div>
+         </div>
+         <div class="row">
+            <div class="col-2 detail-1">State:</div>
+            <div class="col-10"><span>{{agencyContact.AA_Addr_State}}</span></div>
+         </div>
+         <div class="row">
+            <div class="col-2 detail-1">Zip Code:</div>
+            <div class="col-10"><span>{{agencyContact.AA_Addr_Zip}}</span></div>
+         </div>
+         <div class="row">
+            <div class="col-2 detail-1">Phone:</div>
+            <div class="col-10"><span>{{agencyContact.AA_Addr_Phone}}</span></div>
+         </div>
+         <div class="row">
+            <div class="col-2 detail-1">Fax:</div>
+            <div class="col-10"><span>{{agencyContact.AA_Addr_Fax}}</span></div>
+         </div>
+         <div class="row">
+            <div class="col-2 detail-1">Email:</div>
+            <div class="col-10"><span>{{agencyContact.AA_Addr_Email}}</span></div>
+         </div>
+         <div class="row">
+            <div class="col-2 detail-1">Accounting:</div>
+            <div class="col-10"><span>{{agencyContact.AA_Addr_Acct}}</span></div>
+         </div>
+         <div class="row">
+            <div class="col-2 detail-1">Website:</div>
+            <div class="col-10"><span>{{agencyContact.AA_Addr_Web}}</span></div>
+         </div>
+        </div>
+    </div>
+  
+    <!-- #5 row -->
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="BussinssHoursClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Business Hours</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link "><i
+                        [ngClass]="showOfficeClosures?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="showBusinessHours">
+            <button 
+            (click)="OpenAddBusinessHour(businessHours)"
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+            style="margin-left: 10px ;" 
+            class="action-btn">Edit Business Hours</button>
+        </div>
+
+        <div class="x_content pt-3" [ngClass]="showBusinessHours?'show':'hide'">
+           
+           <div style="margin-bottom: 20px;">
+            <span class="detail-2">Time Zone:</span>
+            <span style="margin-left: 17px;font-size: 14px;color: #000000;">{{timeZone}}</span>   
+          </div>
+            <div class="row detail-2 contact-header">
+                <div class="col-6">Week Day</div>
+                <div class="col-6">Timing</div>
+            </div>
+            <div class="row" *ngFor="let hour of agencyHours">
+                <div class="col-md-6 col-sm-6 col-6">
+                    <div class="detail-1"> {{hour.day}}</div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-6">
+                    <div class="detail-1">{{hour.aarc_value}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="ResourceReferenceClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Resource Center Ref. Guide</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link "><i
+                        [ngClass]="showReferenceGuide?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showReferenceGuide?'show':'hide'">
+          <div><a href="../../../assets/documents/AARCAdminReferenceGuide.pdf" target="_blank">Reference Guide</a></div>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #addAgencyContact>
+    <div class="container body">
+        <form class="add-user-form" [formGroup]="addAgenctyContactForm" (ngSubmit)="AddAgencyContact()">
+            <div class="row header mb-4">
+                <div class="col-10">
+                    <div class="header">
+                        <h4 class="mb-0">{{model_title}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="address1" formControlName="address1"
+                            placeholder="Address">
+                        <div *ngIf="submitted && f.address1.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.address1.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="address2" formControlName="address2"
+                            placeholder="Address">
+                        <div *ngIf="submitted && f.address2.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.address2.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="city" formControlName="city"
+                            placeholder="Address">
+                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.city.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="state" formControlName="state"
+                            placeholder="State">
+                        <div *ngIf="submitted && f.state.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.state.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="zip" formControlName="zip"
+                            placeholder="Zip">
+                        <div *ngIf="submitted && f.zip.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.zip.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="phone" formControlName="phone"
+                            placeholder="Phone">
+                        <div *ngIf="submitted && f.phone.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.phone.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="fax" formControlName="fax"
+                            placeholder="Fax">
+                        <div *ngIf="submitted && f.fax.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.fax.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="email" formControlName="email"
+                            placeholder="Email">
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.email.errors.required">Required</div>
+                            <div *ngIf="f.email.errors.email">Please enter valid email</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="accounting" formControlName="accounting"
+                            placeholder="Accounting">
+                        <div *ngIf="submitted && f.accounting.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.accounting.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="download" formControlName="download"
+                            placeholder="Download">
+                        <div *ngIf="submitted && f.download.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.download.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="website" formControlName="website"
+                            placeholder="Website">
+                        <div *ngIf="submitted && f.website.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.website.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-3">
+                <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <button type="button" class="btn cancle-btn btn-block" (click)="close()">Cancel</button>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <button type="button" class="btn add-user btn-block" (click)="AddAgencyContact()">Update Agency
+                            Contact</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #addCarrier>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add Agency Carrier</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <select class="form-control" [(ngModel)]="selectedCarrier">
+            <option value="" disabled>Select Carrier</option>
+            <option *ngFor="let carrier of allCarriers" [ngValue]="carrier.carrier_id">
+                {{carrier.carrier_name}}
+            </option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="button" type="submit" class="btn btn-default" (click)="AddCarrier()">Submit</button>
+        <button type="button" class="btn btn-default" (click)="close()">Close</button>
+     </div>
+ </ng-template>
+
+ <ng-template #businessHours>
+    <div class="modal-lg">
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Edit Business Hours</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+               <span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div>
+                <label>Time Zone</label>
+                <select class="timeZone" id="timeZone" name="timeZone" [(ngModel)]="timeZone">
+                    <option value="" selected>--Select--</option>
+                    <option *ngFor="let zone of timeZoneList" [value]="zone['Code']"> 
+                          {{ zone['Name'] }}
+                    </option>
+                  </select>
+            </div>
+            <div class="row detail-2 contact-header">
+                <div class="col-3"> Open Time</div>
+                <div class="col-4"> Open Time</div>
+                <div class="col-4"> Close Time</div>
+                <div class="col-1">Is Closed</div>
+            </div>
+            <div class="row" *ngFor="let hour of agencyHours">
+                <div class="col-md-3 col-sm-3 col-3">
+                    <div class="detail-1"> {{hour.day}}</div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-4">
+                    <ngb-timepicker *ngIf="!hour.IsClosed" [(ngModel)]="hour.openTime" [spinners]="spinner" [meridian]="true"></ngb-timepicker>
+                     <div *ngIf="hour.IsClosed" style="margin-left: 40px; margin-top:10px">CLOSED</div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-4" >
+                    <ngb-timepicker *ngIf="!hour.IsClosed" [(ngModel)]="hour.closeTime" [spinners]="spinner" [meridian]="true"></ngb-timepicker>
+                    <div *ngIf="hour.IsClosed" style="margin-left: 40px; margin-top:10px">CLOSED</div>
+                </div>
+                <div class="col-md-1 col-sm-1 col-1">
+                    <input  type="checkbox"  [checked]="hour.IsClosed"  (change)="hour.IsClosed = !hour.IsClosed"/>
+                </div>
+            </div>
+        </div> 
+        <div class="modal-footer">
+            <button type="button" type="submit" class="btn btn-default" (click)="UpdateHours()">Submit</button>
+            <button type="button" class="btn btn-default" (click)="close()">Close</button>
+         </div>
+     </div>       
+ </ng-template>
+
+ <ng-template #addHoliday>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add Holiday/Closure Date</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <div>
+            <span>Date:</span>  
+             <input placeholder="Select Date.." style="margin: 25px;"
+              name="dp" [(ngModel)]="holidayDate" ngbDatepicker #d="ngbDatepicker"  (click)="d.toggle()">
+        </div>
+        <div>
+            <span>Reason:</span> 
+            <input style="margin-left: 10px;" type="text" [(ngModel)]="holidayReason"/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" type="submit" class="btn btn-default" (click)="AddHoliday()">Submit</button>
+        <button type="button" class="btn btn-default" (click)="close()">Close</button>
+     </div>
+ </ng-template>
+
+ <ng-template #addEvent>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add Event</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <div>
+            <span>Date:</span>  
+             <input placeholder="Select Date.." style="margin: 25px;"
+              name="dp" [(ngModel)]="holidayDate" ngbDatepicker #d="ngbDatepicker"  (click)="d.toggle()">
+        </div>
+        <div>
+            <span>Reason:</span> 
+            <input style="margin-left: 10px;" type="text" [(ngModel)]="holidayReason"/>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" type="submit" class="btn btn-default" (click)="AddEvent()">Submit</button>
+        <button type="button" class="btn btn-default" (click)="close()">Close</button>
+     </div>
+ </ng-template>
+ 
+ <ng-template #addTicker>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add Ticker</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-4">Expiration Date:</div>
+             <div class="col-8">
+                <input placeholder="Select Date.."
+                name="dp" [(ngModel)]="holidayDate" ngbDatepicker #d="ngbDatepicker" [minDate]="minDate" >
+                <i class="fa fa-calendar" style="margin-left: -20px;font-size: 17px;" aria-hidden="true" (click)="d.toggle()"></i> 
+            </div>
+        </div>
+        <div class="row" style="margin-top:15px;">
+            <div class="col-4">Ticker Item:</div>
+            <div class="col-8"><input type="text" [(ngModel)]="holidayReason"/></div>
+        </div>
+
+        <div class="row" style="margin-top:15px;">
+            <div class="col-4">Agency:</div>
+            <div class="col-8">
+            <select class="form-control" multiple="true"  [(ngModel)]="selectedAgencies">
+                <option *ngFor="let agency of agencies" [ngValue]="agency.agency_id">
+                    {{agency.agency_name}}
+                </option>
+            </select>
+        </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" type="submit" class="btn btn-default" (click)="AddTicker()">Submit</button>
+        <button type="button" class="btn btn-default" (click)="close()">Close</button>
+     </div>
+ </ng-template>
+
+ <ng-template #addNews>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Add News</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-2">News</div>
+            <div class="col-10">
+                <!-- <textarea style="width: 80%"  type="text" [(ngModel)]="holidayReason"></textarea> -->
+                <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="holidayReason"></angular-editor>
+            
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" type="submit" class="btn btn-default" (click)="AddNews()">Submit</button>
+        <button type="button" class="btn btn-default" (click)="close()">Close</button>
+     </div>
+ </ng-template>
+
+ <ng-template #viewpc>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">{{viewPcTitle}} </h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-4 detail-2 contact-header">
+              Producer Code
+            </div>
+            <div class="col-4 detail-2 contact-header">
+              Type
+            </div>
+            <div class="col-2 detail-2 contact-header">
+              Edit
+            </div>
+            <div class="col-2 detail-2 contact-header">
+                Delete
+            </div>
+        </div>
+        <div class="row" *ngFor="let pc of producerCodeList">
+            <div class="col-4">
+              {{pc.producer_code}}
+            </div>
+            <div class="col-4">
+              {{pc.brnachName}}
+            </div>
+            <div class="col-2">
+                <i (click)="EditPC(addpc, pc,false)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+            </div>
+            <div class="col-2">
+                <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="DeletePC(pc)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+            </div>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button type="button" type="submit" class="btn btn-default" (click)="EditPC(addpc,'',true)">Add Producer Code</button>
+        <button type="button" class="btn btn-default" (click)="close()">Close</button>
+     </div>
+ </ng-template>
+
+ <ng-template #addpc>
+    <div style="max-height: 600px; overflow: auto;">
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">{{prodCodeTitle}}</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="closeAddPC(addpc)">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <form  [formGroup]="addProducerCodeForm" (ngSubmit)="submitPC()">
+            <div class="row mb-15">
+                <div class="col-6">
+                    <input type="text" id="producerCode" formControlName="producerCode" placeholder="Producer Code"/>
+                    <div *ngIf="isProducerCodeSubmit && this.addProducerCodeForm.controls.producerCode.errors" style="display: block ;" class="invalid-feedback">
+                        <div *ngIf="this.addProducerCodeForm.controls.producerCode.errors.required">Required</div>
+                    </div>
+                </div>
+               </div>
+               <div class="row mb-15">
+                <div class="col-2">Personal</div>
+                <div class="col-1"><input type="checkbox" id="branchPersonal" formControlName="branchPersonal" (change)="BranchChanged('P', $event)"/></div> 
+                <div class="col-2">Commercial</div>
+                <div class="col-1"><input type="checkbox" id="branchCommercial" formControlName="branchCommercial" (change)="BranchChanged('C', $event)"/></div> 
+                <div class="col-2">Admin</div>
+                <div class="col-1"><input type="checkbox" id="branchAdmin" formControlName="branchAdmin" (change)="BranchChanged('A', $event)"/></div> 
+                <div class="row" *ngIf="isProducerCodeSubmit && (!this.addProducerCodeForm.controls.branchPersonal.value && !this.addProducerCodeForm.controls.branchCommercial.value && !this.addProducerCodeForm.controls.branchAdmin.value)" style="display: block; margin-left: 15px;" class="invalid-feedback">
+                    Required
+                </div> 
+            </div>
+           
+               <div class="row mb-15">
+                <div class="col-6">
+                     <input type="text" placeholder="User Name" id="userName" formControlName="userName"/>
+                     <div *ngIf="isProducerCodeSubmit && this.addProducerCodeForm.controls.userName.errors" style="display: block ;" class="invalid-feedback">
+                        <div *ngIf="this.addProducerCodeForm.controls.userName.errors.required">Required</div>
+                    </div>    
+                </div>
+                <div class="col-6">
+                     <input type="text" placeholder="Password" id="pwd" formControlName="pwd"/>
+                     <div *ngIf="isProducerCodeSubmit && this.addProducerCodeForm.controls.pwd.errors" style="display: block ;" class="invalid-feedback">
+                        <div *ngIf="this.addProducerCodeForm.controls.pwd.errors.required">Required</div>
+                    </div>  
+                    </div>
+               </div>
+               <div class="row mb-15">
+                <div class="col-6">Show Denied Staff from team</div>
+               </div>
+               <div class="row mb-15">
+                <div class="col-10">
+                    <select (change)="getDenieduser()" id="team" formControlName="team">
+                        <option value="0">ALL STAFF</option>
+                        <option *ngFor="let team of teams" [ngValue]="team.team_id">
+                            {{team.team_name}}
+                        </option>
+                    </select>
+                </div>
+               </div>
+               <div class="row">
+                <div class="col-6"> <button type="button" (click)="denySelected()"  class="btn btn-default">Deny Selected</button></div>
+               <div class="col-6"><button type="button"  (click)="grantSelected()"  class="btn btn-default">Grant Selected</button></div>
+               </div>
+                <div class="row detail-2 contact-header">
+                    <div class="col-6">Granted Staff</div>
+                    <div class="col-6">Denied Staff</div>
+               </div>
+               <div class="row ">
+                <div class="col-6">
+                    <div *ngFor="let user of granteduser">
+                        <input type="checkbox" [checked]="user['IsSelected']"  (change)="user['IsSelected'] = !user['IsSelected']" >
+                        {{user.first_name}}  {{user.middle_name}}   {{user.last_name}}
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div *ngFor="let user of deniedUser">
+                        <input type="checkbox" [checked]="user['IsSelected']"  (change)="user['IsSelected'] = !user['IsSelected']" >
+                        {{user.first_name}}  {{user.middle_name}}   {{user.last_name}}
+                    </div>
+                </div>
+           </div>
+        </form>
+      
+    </div>
+    <div class="modal-footer">
+        <button type="button" type="submit" class="btn btn-default" (click)="AddEditSubmitPC()">{{pcBtnLable}}</button>
+        <button type="button" class="btn btn-default" (click)="closeAddPC(addpc)">Close</button>
+     </div>
+    </div>
+ </ng-template>

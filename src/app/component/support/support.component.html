@@ -1,0 +1,74 @@
+<div class="container body">
+    <form class="add-user-form" [formGroup]="supportForm">
+    <div class="col-10">
+        <h4 class="d-inline-block m-0">Support</h4>
+    </div>
+    <div>
+    <br>
+    <div>
+    <div class="col-md-8 col-sm-8 col-8">
+        <table>
+            <tr>
+                <td>
+                    <span class="mr-2">Select Agency</span>
+                </td>
+                <td>
+                    <select id="selectedAgency" formControlName="selectedAgency" style="width: 150%; height: 30px;">
+                        <option value="" disabled selected>-None-</option>
+                        <option *ngFor="let b of agencies" value="{{b.agency_name}}">{{b.agency_name}}</option>
+                    </select>
+                </td>
+            </tr>
+            <br>
+            <tr>
+                <td>
+                    <span class="mr-2">Issue</span>
+                </td>
+                <td>
+                    <select id="issue" formControlName="issue" style="width: 150%; height: 30px;">
+                        <option value="" disabled selected>-None-</option>
+                        <option value="1">User ID Issue</option>
+                        <option value="2">Other issue</option>
+                    </select>
+                </td>
+            </tr>
+            <br>
+           <tr>
+                <td>
+                    <span class="mr-2">Subject</span>
+                </td>
+                <td>
+                    <input type="text" style="width: 150%; height: 30px;" id="subject" formControlName="subject" placeholder="Subject">
+                </td>
+            </tr>
+            <br>
+            <tr>
+                <td>
+                    <span class="mr-2">Description</span>
+                </td>
+                <td>
+                    <textarea type="text" style="width: 150%; height: 60px;" class="form-control" id="description" formControlName="description" placeholder="Description"></textarea>
+                </td>
+            </tr>
+            <br>
+            <tr>
+                <td>
+                    <span class="mr-2">Attachment</span>
+                </td>
+                <td>
+                    <input #myInput type="file" id="file" (change)="handleFileInput($event.target)">
+                </td>
+            </tr>
+            <br>
+        </table>
+        <br>
+        <div class="col-sm-6 col-12">
+            <div class="form-group">
+                <button type="button" class="btn add-user btn-block" (click)="submit($event)">submit</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</form>
+</div>

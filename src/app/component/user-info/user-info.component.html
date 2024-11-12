@@ -1,0 +1,362 @@
+
+<div class="row">
+    <div class="col-2">Current User</div>
+    <div class="col-10">
+            <strong>
+                {{currentUser['First_name']}}
+                {{currentUser['Middle_name']}}
+                {{currentUser['Last_name']}}
+            </strong>
+            <button 
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+             style="margin-left: 10px ;"
+             (click)="changeUser(changeUsertemplate)" 
+             class="action-btn"
+             >Change User</button>
+            <button style="margin-left: 10px ;"
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+             (click)="cloneUser(cloneUsertemplate)"
+             class="action-btn">Clone User</button>    
+        </div>
+    </div>
+<div>
+
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="showProducerCodeClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Producer Code Credentials </h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link " (click)="showProducerCodeClick()"><i
+                        [ngClass]="showProducerCode?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div [ngClass]="showProducerCode?'show':'hide'">
+            <button
+            (click)="cloneUser(importCredentail)" *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+            class="action-btn producerCodeBtn" (clcik)="cloneUser(importCredentail)">Import Credentials 
+        </button>
+        </div>
+       
+        <div [ngClass]="showProducerCode?'show':'hide'">
+            <div class="x_content pt-3" 
+            *ngFor="let pc of producerCode">
+              <div class="row"  style=" border-bottom: 1px solid;">
+                  <div class="col-md-4 col-sm-4 col-4">
+                      <div class="detail-1">Producer Code </div>
+                  </div>
+                  <div class="col-md-8 col-sm-8 col-8">
+                      <div class="detail-2"><b>{{pc['producer_code']}}</b>
+                          <i class="fa fa-clone copy" title="Copy" aria-hidden="true" (click)="copy(pc['producer_code'])"></i>
+                      </div>
+                  </div>
+                  <div class="col-md-4 col-sm-4 col-4">
+                    <div class="detail-1">User Id</div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-8">
+                    <div class="detail-2"><b>{{pc['uid']}}</b>
+                        <i class="fa fa-clone copy" title="Copy" aria-hidden="true" (click)="copy(pc['uid'])"></i>
+                    </div>
+                </div>
+                  <div class="col-md-4 col-sm-4 col-4">
+                      <div class="detail-1">Password</div>
+                  </div>
+                  <div class="col-md-8 col-sm-8 col-8">
+                      <div class="detail-2"><b>{{pc['pwd']}}</b> 
+                          <i class="fa fa-clone copy" title="Copy"  aria-hidden="true" (click)="copy(pc['pwd'])"></i>
+                      </div>
+                      
+                  </div>
+                  
+                  <div class="col-md-4 col-sm-4 col-4">
+                      <div class="detail-1">Type</div>
+                  </div>
+                  <div class="col-md-8 col-sm-8 col-8">
+                      <div class="detail-2">
+                        <span *ngIf="pc['branch']=='A'">Admin</span>
+                        <span *ngIf="pc['branch']=='C'">Commercial</span>
+                        <span *ngIf="pc['branch']=='P'">Personal</span>
+                        <span *ngIf="pc['branch']=='B'">Both</span>
+                          <!-- <i class="fa fa-clone copy" title="Copy" aria-hidden="true" (click)="copy(pc['uid'])"></i> -->
+                      </div>
+                  </div>
+
+                  <div class="col-md-4 col-sm-4 col-4">
+                    <div class="detail-1">Update</div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-8">
+                    <a (click)="updatePasswordpopup(updatePasswordtemplate,pc['uid'],pc['pwd'],pc['producer_code'],pc['branch'])"style=" cursor:pointer !important; color: blue; font-weight: bold;">Click Here to Update Password</a>
+                </div>
+
+              </div>
+          </div>
+        </div>
+       
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="CarrierInfoClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Carrier Info</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="CarrierInfoClick()"><i
+                        [ngClass]="showCarrierInfo?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showCarrierInfo?'show':'hide'">
+            <div class="row" *ngIf="selectedCarrier">
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Mailing Address
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_maddr1}}
+                        {{selectedCarrier.carrier_maddr2}}
+                        {{selectedCarrier.carrier_mcity}}
+                        {{selectedCarrier.carrier_mstate}}
+                        {{selectedCarrier.carrier_mzip}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Address
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_addr1}}
+                        {{selectedCarrier.carrier_addr2}}
+                        {{selectedCarrier.carrier_city}}
+                        {{selectedCarrier.carrier_state}}
+                        {{selectedCarrier.carrier_zip}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Speed Dial Ext
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_speed_dial}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Phone
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_phone}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Fax
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_fax}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Website
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        <a [href]="selectedCarrier.carrier_web" target="_blank"> {{selectedCarrier.carrier_web}}</a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                       Email
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_email}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Notes
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2" style="white-space: pre-line">
+                        {{selectedCarrier.carrier_notes}}
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+   
+</div>
+<ng-template #changeUsertemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Select User</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <select class="form-control" [(ngModel)]="selectedUser" (change)="UserSelected()">
+            <option value="" disabled>Select User</option>
+            <option *ngFor="let user of users" [ngValue]="user.userid">
+                {{user.first_name}} {{user.middle_name}} {{user.last_name}}
+            </option>
+        </select>
+    </div>
+    <div class="modal-footer">
+       <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+    </div>
+ </ng-template>
+
+ <ng-template #cloneUsertemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Clone AARC User </h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="cloneUserForm" (ngSubmit)="submitCloneUser()">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <select class="form-control" formControlName="cloneFrom" id="cloneFrom">
+                            <option value="" disabled>Select a User to Clone From ...</option>
+                            <option *ngFor="let user of users" [ngValue]="user.userid">
+                                {{user.first_name}} {{user.middle_name}} {{user.last_name}}
+                            </option>
+                        </select>
+                        <div *ngIf="cloneSubmitted && f.cloneFrom.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="f.cloneFrom.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="First Name">
+                        <div *ngIf="cloneSubmitted && f.firstName.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="f.firstName.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last Name">
+                        <div *ngIf="cloneSubmitted && f.lastName.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="f.lastName.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="email" formControlName="email" placeholder="Email">
+                        <div *ngIf="cloneSubmitted && f.email.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Required</div>
+                        </div>
+                        <div *ngIf="cloneSubmitted && f.email.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.pattern">Please enter valid email</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" type="submit" class="btn btn-default">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+             </div>
+
+        </form>
+    </div>
+    
+ </ng-template>
+
+ <ng-template #importCredentail
+ template>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Import Credentials</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="importCredentailForm" (ngSubmit)="submitImportCredentail()">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <select class="form-control" formControlName="UserImportCredentailFrom" id="UserImportCredentailFrom">
+                            <option value="" disabled>Select a User to Clone From ...</option>
+                            <option *ngFor="let user of users" [ngValue]="user.userid">
+                                {{user.first_name}} {{user.middle_name}} {{user.last_name}}
+                            </option>
+                        </select>
+                        <div *ngIf="importCredentailSubmitted && f.UserImportCredentailFrom.errors" style="display: block ;" class="invalid-feedback">
+                            <div *ngIf="f.UserImportCredentailFrom.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" type="submit" class="btn btn-default">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+             </div>
+        </form>
+    </div>
+    
+
+ </ng-template>
+
+ <ng-template #updatePasswordtemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Update Password</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="updatePasswordForm">
+   
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="password" readonly="true" class="form-control" id="oldPassword" formControlName="oldPassword" placeholder="Old Password : {{userPW}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <input type="password" class="form-control" id="NewPassword" formControlName="NewPassword" placeholder="Enter New Password">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" type="submit" class="btn btn-default" (click)="submit($event)">Submit</button>
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+             </div>
+
+        </form>
+    </div>
+    
+ </ng-template>

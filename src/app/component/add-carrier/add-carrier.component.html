@@ -1,0 +1,135 @@
+<div class="container body">
+    <form class="add-user-form" [formGroup]="addCarrierForm" (ngSubmit)="submit()">
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">{{title}}</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+               <span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <div class="modal-body">
+        
+        <div class="row">
+            <div class="col-sm-12 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="carrierName" formControlName="carrierName" placeholder="Carrier Name">
+                    <div *ngIf="submitted && f.carrierName.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.carrierName.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="mailingAddress1" formControlName="mailingAddress1" placeholder="Mailing Address Line1">
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="mailingAddress2" formControlName="mailingAddress2" placeholder="Mailing Address Line2">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="mailingCity" formControlName="mailingCity" placeholder="Mailing City">
+                </div>
+            </div>
+            <div class="col-sm-4 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="mailSate" formControlName="mailSate" placeholder="State">
+                </div>
+            </div>
+            <div class="col-sm-4 col-12">
+                <div class="form-group">
+                    <input type="mailingZip" class="form-control" id="mailingZip" formControlName="mailingZip" placeholder="Mailing Zip">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="address1" formControlName="address1" placeholder="Address Line 1">
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="address2" formControlName="address2" placeholder="Address Line 2">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="city" formControlName="city" placeholder="City">
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="state" formControlName="state" placeholder="State">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="zip" formControlName="zip" placeholder="Zip">
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="speedDial" formControlName="speedDial" placeholder="Speed Dial">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="Phone">
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="fax" formControlName="fax" placeholder="Fax">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="email" formControlName="email" placeholder="Email">
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="Website" formControlName="Website" placeholder="Website">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-12">
+                <div class="form-group">
+                    <textarea type="text" class="form-control" id="Notes" formControlName="Notes" placeholder="Notes"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <button type="button" class="btn cancle-btn btn-block" (click)="close()">Cancel</button>
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="form-group" *ngIf="!isEdit">
+                    <button type="button" class="btn add-user btn-block" (click)="submit()">{{submitBtnTitle}}</button>
+                </div>
+                <div class="form-group" *ngIf="isEdit">
+                    <button type="button" class="btn add-user btn-block" (click)="submit()">{{submitBtnTitle}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+

@@ -1,0 +1,183 @@
+.show {
+    display:block;
+}
+
+.hide {
+    display:none;
+}
+.copy
+{
+    margin-left: 15px;
+    cursor: pointer;
+}
+.producerCodeBtn
+{
+    margin-top: 10px;
+    float: right;
+}
+.contact-header
+{
+    border-bottom: 2px solid gray;
+    margin-bottom: 9px;
+}
+
+.contact-item
+{
+    margin-bottom: 15px;
+}
+
+.action-icon
+{
+    font-size: 15px !important;
+    cursor: pointer;
+}
+
+.action-btn
+{
+    font-size: 12px;
+    font-weight: 700;
+    color: #FFFFFF;
+    background: #F05133;
+    border: 2px solid #F05133;
+    border-radius: 0;
+    padding: 5px 10px;
+    float:right
+}
+.action-btn:hover {
+    background: #F0F0F0;
+    color: #F05133;
+}
+
+body,html {
+    height: 100%;
+  }
+  body {
+    font-family: 'Mulish';
+    background: #F0F0F0;
+    height: 100%;
+  }
+  a,
+  a:hover{
+    text-decoration: none;
+  }
+  ul,
+  li,
+  ul li,
+  ol,
+  ol li{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .btn,
+  .btn:focus{
+    outline: none;
+  }
+  .login-btns ul li {
+    display: inline-block;
+  }
+  button,
+  button:focus{
+    outline: 0;
+    box-shadow: none;
+    border: 0;
+    background-color: transparent;
+  }
+  .btn.add-user {
+    font-size: 16px;
+    font-weight: 700;
+    color: #FFFFFF;
+    background: #F05133;
+    border: 2px solid #F05133;
+    border-radius: 0;
+    padding: 5px 10px;
+    height: 40px;
+  }
+  .add-user.btn:hover,
+  .add-user.btn.active {
+    background: #F0F0F0;
+    color: #F05133;
+  }
+  .form-control:focus{
+    outline: none;
+    box-shadow: none;
+  }
+  .form-control {
+    height: 41px;
+    background: #FAFAFA;
+    border: 1px solid #D9D9D9;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #7C7C7C;
+  }
+  
+  form.add-user-form {
+      max-width: 530px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border-radius: 5px;
+      padding: 0 15px 10px 15px;
+  }
+  
+  .heading-wrapper {
+    background: #F2F2F2;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    height: 48px;
+    line-height: 48px;
+    margin:2px;
+  }
+  
+  .main-heading h4 {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 45px;
+    color: #252733;
+    font-family: 'Mulish';
+  }
+  
+  .form-group select{
+    background: #F2F2F2;
+    border: 1px solid #C4C4C4;
+    border-radius: 5px;
+    height: 48px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.4px;
+    color: #252733;
+  }
+  
+  .form-group select option {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.4px;
+    color: #252733;
+  }
+  input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  button.btn.cancle-btn.btn-block {
+    background: #E0E0E0;
+    border: 2px solid #C4C4C4;
+    height: 40px;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 0;
+    line-height: 20px;
+    color: #455A64;
+  }
+
+  .header
+  {
+    margin-top:13px;
+    color: #73879C;
+    font-size: 22px;
+  }
+
+  .cursor-pointer
+  {
+  cursor: pointer;
+  }

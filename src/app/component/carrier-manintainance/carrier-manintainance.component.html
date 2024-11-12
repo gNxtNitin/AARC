@@ -1,0 +1,424 @@
+<div class="row">
+    <div class="col-3 cursor-pointer"  (click)="SelectCarrier(selectCarrier)">Selected Carrier</div>
+    <div class="col-3 cursor-pointer">
+        <a (click)="EditCarrier(selectedCarrier)">
+            {{selectedCarrier['carrier_name']}}
+        </a>
+    </div>
+    <div class="col-6">
+
+        <button 
+        style="min-width: 107px;"
+        *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+        (click)="DeleteCarrier()" 
+        class="action-btn">Delete Carrier</button>
+     
+        <button 
+        style="min-width: 100px;"
+        *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+        (click)="EditCarrier(selectedCarrier)" 
+        class="action-btn">Edit Carrier</button>
+       
+        <button 
+        style="min-width: 100px;"
+        *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+        (click)="AddCarrier()" 
+        class="action-btn">Add Carrier</button>
+    </div>
+</div>
+<div>
+    <!-- #1 row -->
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="CarrierInfoClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Carrier Info</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="CarrierInfoClick()"><i
+                        [ngClass]="showCarrierInfo?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showCarrierInfo?'show':'hide'">
+            <div class="row" *ngIf="selectedCarrier">
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Mailing Address
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_maddr1}}
+                        {{selectedCarrier.carrier_maddr2}}
+                        {{selectedCarrier.carrier_mcity}}
+                        {{selectedCarrier.carrier_mstate}}
+                        {{selectedCarrier.carrier_mzip}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Address
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_addr1}}
+                        {{selectedCarrier.carrier_addr2}}
+                        {{selectedCarrier.carrier_city}}
+                        {{selectedCarrier.carrier_state}}
+                        {{selectedCarrier.carrier_zip}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Speed Dial Ext
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_speed_dial}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Phone
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_phone}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Fax
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_fax}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Website
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        <a [href]="selectedCarrier.carrier_web" target="_blank"> {{selectedCarrier.carrier_web}}</a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                       Email
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2">
+                        {{selectedCarrier.carrier_email}}
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-3 pb-10">
+                    <div class="detail-1">
+                        Notes
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-8 col-9 pb-10">
+                    <div class="detail-2" style="white-space: pre-line">
+                        {{selectedCarrier.carrier_notes}}
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+    <!-- #2 row -->
+    <div class="x_panel tile"   *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'">
+        <div class="x_title row" (click)="BranchClick()">
+            <div class="col-10">
+                <h5 class="d-inline-block m-0">Carrier Branches</h5>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link " (click)="BranchClick()"><i
+                        [ngClass]="showBranch?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showBranch?'show':'hide'">
+            <div *ngIf="branches">
+                <div class="row">
+                    <div class="col-1">
+                        <input type="checkbox" [checked]="isPersonalBranch" (change)="BranchChange($event,'BP')" />
+                    </div>
+                    <div class="col-8">
+                       Personal
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1">
+                        <input type="checkbox"  [checked]="isCommercialBranch" (change)="BranchChange($event,'BC')"  />
+                    </div>
+                    <div class="col-8">
+                       Commercial
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ <!-- #3 row -->
+    <div class="x_panel tile"   *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'">
+        <div class="x_title row" (click)="CarrierTypeClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Carrier Type</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link " (click)="CarrierTypeClick()"><i
+                        [ngClass]="showCarrierType?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+
+
+        <div class="x_content pt-3" [ngClass]="showCarrierType?'show':'hide'">
+            <div *ngIf="types">
+                <!-- <div class="row detail-2 contact-header">
+                    <div class="col-10"> Types </div> {{carrierType}}
+                </div> -->
+            <div class="row">
+                <div class="col-4"> <label>
+                    <input type="radio" value="TC" [(ngModel)]="carrierType" (change)="CarrierTypeChange($event)">
+                      <span style="margin:10px">Carrier</span>
+                  </label></div>
+                <div class="col-4"> <label>
+                    <input type="radio" value="TB" [(ngModel)]="carrierType" (change)="CarrierTypeChange($event)">
+                      <span style="margin:10px">Broker</span>
+                  </label></div>
+                <div class="col-4"><label>
+                    <input type="radio" value="TO" [(ngModel)]="carrierType" (change)="CarrierTypeChange($event)">
+                      <span style="margin:10px">Other</span>
+                  </label> </div>
+            </div>
+            </div>
+        </div>
+    </div>
+ <!-- #3 row -->
+    <div class="x_panel tile">
+        <div class="x_title row" (click)="ContactInfoClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Contact Info</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link " (click)="ContactInfoClick()"><i
+                        [ngClass]="showContactInfo?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="row" style="float:right; margin-top: 10px;" *ngIf="(selectedCarrier|json) != ({} | json) && showContactInfo">
+            <button 
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+            style="margin-left: 10px ;" 
+            (click)="OpenModal(addCarrierContact)" 
+            class="action-btn">Add
+                Contact</button>
+        </div>
+        <div class="x_content row pt-3" [ngClass]="showContactInfo?'show':'hide'">
+
+            <div *ngIf="carrierContact">
+                <div class="row detail-2 contact-header">
+                    <div class="col-2">Phone</div>
+                    <div class="col-2"> Name </div>
+                    <div class="col-3">Email</div>
+                    <div class="col-3">Notes</div>
+                </div>
+
+                <div class="row contact-item" *ngFor="let contact of carrierContact">
+                    <div class="col-2 detail-1">{{contact.contact_phone}}</div>
+                    <div class="col-2 detail-1">{{contact.contact_first_name}} {{contact.contact_middle_name}}
+                        {{contact.contact_last_name}} </div>
+                    <div class="col-3 detail-1" style="overflow-wrap: break-word;">{{contact.contact_email}}</div>
+                    <div class="col-3 detail-1" style="overflow-wrap: break-word;">{{contact.contact_notes}}</div>
+                    <div class="col-1"  *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'">
+                        <i (click)="OpenContactEdit(contact,addCarrierContact)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-1"  *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'">
+                        <i  (click)="DeleteContact(contact)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #4 row -->
+    
+
+    <!-- #5 row -->
+    <!-- <div class="x_panel tile">
+        <div class="x_title row" (click)="BussinssHoursClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Business Hours</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link "><i
+                        [ngClass]="showOfficeClosures?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+
+
+        <div class="x_content pt-3" [ngClass]="showBusinessHours?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-6">Week Day</div>
+                <div class="col-6">Timing</div>
+            </div>
+            <div class="row" *ngFor="let hour of agencyHours">
+                <div class="col-md-6 col-sm-6 col-6">
+                    <div class="detail-1"> {{hour.day_of_week}}</div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-6">
+                    <div class="detail-1">{{hour.biz_hrs}}</div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+</div>
+<ng-template #addCarrierContact>
+    <div class="container body">
+        <form class="add-user-form" [formGroup]="addCarrierContactForm" (ngSubmit)="AddCarrierContact()">
+            <div class="row header mb-4">
+                <div class="col-10">
+                    <div class="header">
+                        <h4 class="mb-0">{{model_title}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="firstName" formControlName="firstName"
+                            placeholder="First Name">
+                        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.firstName.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                            placeholder="Last name">
+                        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.lastName.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="MiddleName" formControlName="MiddleName"
+                            placeholder="Middle Name">
+                        <div *ngIf="submitted && f.MiddleName.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.MiddleName.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="suffix" formControlName="suffix"
+                            placeholder="Suffix">
+                        <div *ngIf="submitted && f.suffix.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.suffix.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+                            placeholder="Phone Number" maxlength="15">
+                        <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.phoneNumber.errors.required">Required</div>
+                        </div>
+                        <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.phoneNumber.errors.pattern">Enter valid Number</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.email.errors.required">Required</div>
+                        </div>
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.email.errors.pattern">Enter valid email</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <select formControlName="agency" id="agency" class="form-control" multiple="true">
+                        <option value="">{{f.agency['value']}}</option>
+                        <option *ngFor="let agency of agencies" [ngValue]="agency.agency_id">
+                            {{agency.agency_name}}
+                        </option>
+                    </select>
+                    <div *ngIf="submitted && f.agency.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.agency.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:10px;">
+                <div class="col-sm-12 col-12">
+                    <div class="form-group">
+                        <textarea class="form-control" id="notes" formControlName="notes"
+                            placeholder="Notes"></textarea>
+                        <div *ngIf="submitted && f.notes.errors" class="invalid-feedback" style="display:block">
+                            <div *ngIf="f.notes.errors.required">Required</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-3">
+                <div class="col-sm-6 col-12">
+                    <div class="form-group">
+                        <button type="button" class="btn cancle-btn btn-block" (click)="close()">Cancel</button>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-12" *ngIf="!isEditContact">
+                    <div class="form-group">
+                        <button  type="button" class="btn add-user btn-block" (click)="AddCarrierContact()">Add Carrier
+                            Contact</button>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-12" *ngIf="isEditContact">
+                    <div class="form-group">
+                        <button  type="button" class="btn add-user btn-block" (click)="EditCarrierContact()">Edit Carrier
+                            Contact</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+
+
+<ng-template #selectCarrier>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Select Carrier</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <select class="form-control" [(ngModel)]="newSelectedCarrier">
+            <option value="" disabled>Select Carrier</option>
+            <option *ngFor="let carrier of allCarriers" [ngValue]="carrier">
+                {{carrier.carrier_name}}
+            </option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="button" type="submit" class="action-btn" (click)="ChangeCarrier()">Submit</button>
+        <button type="button" class="action-btn" (click)="close()">Close</button>
+     </div>
+ </ng-template>

@@ -1,0 +1,22 @@
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-sm-12 col-12">
+                <div class="form-group">
+                   {{message}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row">
+            <div class="col-6">
+                <button type="button" class="btn cancle-btn btn-block" (click)="onCancel()">Close</button>
+            </div>
+            <div class="col-6">
+                <button type="button"  class="btn add-user btn-block" (click)="onConfirm()">Submit</button>
+            </div>
+        </div>
+    </div>

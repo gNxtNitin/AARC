@@ -1,0 +1,32 @@
+.show {
+    display:block;
+}
+
+.hide {
+    display:none;
+}
+.copy
+{
+    margin-left: 15px;
+    cursor: pointer;
+}
+.producerCodeBtn
+{
+    margin-top: 10px;
+    float: right;
+}
+.action-btn
+{
+    font-size: 12px;
+    font-weight: 700;
+    color: #FFFFFF;
+    background: #F05133;
+    border: 2px solid #F05133;
+    border-radius: 0;
+    padding: 5px 10px;
+    float:right
+}
+.action-btn:hover {
+    background: #F0F0F0;
+    color: #F05133;
+}

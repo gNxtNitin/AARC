@@ -1,0 +1,184 @@
+
+<style type="text/css">
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+  height: 100px; /* Should be removed. Only for demonstration */
+  font-weight: 400;
+  color:#73879C;
+  font-size: 18px;
+  font-family: "Mulish", sans-serif;
+  margin-top: -15px;
+  margin-bottom: -23px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
+<div class="top_nav">
+    <div class="nav_menu mb-0">
+        <div class="nav toggle d-lg-none d-md-block">
+            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+        </div>
+        <nav class="nav navbar-nav" (click)="toggleDropdown()">
+            <ul class="navbar-right">
+                <li class="nav-item dropdown open" [ngClass]="{'show': userDetail['AASecLevel'] == 'ADMIN'}">
+                    <a href="javascript:;" class="user-profile" aria-haspopup="true" id="navbarDropdown"
+                        (click)="showProfileMenu()" data-toggle="dropdown" aria-expanded="false">
+                        <div class="admin-logo d-inline-block text-right align-middle mr-2">
+                            {{userDetail['First_name']}} {{userDetail['Middle_name']}} {{userDetail['Last_name']}}<br /> <span
+                                class="text-danger">({{userRole}})</span>
+                        </div>
+                        <div class="d-inline-block">
+                            <img src="../../../assets/images/admin.png" alt="">
+                        </div>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-usermenu pull-right"
+                        aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="javascript:;" (click)="editUser()">Edit User</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="onChangePassword()"> Change Password</a>
+                        <a class="dropdown-item" href="javascript:;" (click)="onLogoutClick()"> Log Out</a>
+                    </div>
+                </li>
+
+                <li role="presentation" class="nav-item dropdown open" >
+                    <!-- <a href="javascript:;" class=" info-number" id="navbarDropdown1" data-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="badge bg-blue">4</span>
+                        </a> -->
+                    <!-- <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
+                            <li class="nav-item">
+                            <a class="dropdown-item">
+                                <span class="image"><img src="../../../assets/images/img.jpg" alt="Profile Image" /></span>
+                                <span>
+                                <span>John Smith</span>
+                                <span class="time">3 mins ago</span>
+                                </span>
+                                <span class="message">
+                                Film festivals used to be do-or-die moments for movie makers. They were where...
+                                </span>
+                            </a>
+                            </li>
+                        </ul> -->
+                </li>
+                
+                <li  *ngIf="userDetail['AASecLevel'] == 'ADMIN'" >
+                    <a href="javascript:;" (click)="addUser()">
+                        <i class="fa fa-user"></i>
+                    </a>
+                </li>
+                <li role="presentation" class="nav-item dropdown open" 
+                    style="padding-right: 10px;height: 40px; border-right: 1px solid;">
+                    <a href="javascript:;" class="info-number" id="navbarDropdown1" data-toggle="dropdown"
+                        aria-expanded="false" (click)="showCarrier()">
+                        <span class="mr-2" *ngIf="selectedCarrier">{{selectedCarrier.carrier_name}}</span>
+                        <span class="mr-2" *ngIf="!selectedCarrier">Change Carrier</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu list-unstyled msg_list changeAgency" role="menu" aria-labelledby="navbarDropdown1">
+                       
+                        <div *ngIf="carriers">
+                            <li><input class="search-input" type="text" (keyup)="searchCarrier($event)" placeholder="--Search Carrier--" /></li>
+                            <li *ngIf="carriersList.length != 0" style="background-color: #bfbbbb;"><a>--Select a Carrier--</a></li>
+                            <li *ngFor="let carrier of carriersList" class="nav-item">
+                                <a class="dropdown-item" href="javascript:;"
+                                    (click)="onCarrierSelect(carrier)">{{carrier.carrier_name}}</a>
+                            </li>
+
+                            <li *ngIf="brokerList.length != 0" style="background-color: #bfbbbb;"><a>--Broker--</a></li>
+                            <li *ngFor="let carrier of brokerList" class="nav-item">
+                                <a class="dropdown-item" href="javascript:;"
+                                    (click)="onCarrierSelect(carrier)">{{carrier.carrier_name}}</a>
+                            </li>
+                            <li *ngIf="otherList.length != 0" style="background-color: #bfbbbb;"><a>--OTHER--</a></li>
+                            <li *ngFor="let carrier of otherList" class="nav-item">
+                                <a class="dropdown-item" href="javascript:;"
+                                    (click)="onCarrierSelect(carrier)">{{carrier.carrier_name}}</a>
+                            </li>
+                        </div>
+
+                        <div *ngIf="!carriers">
+                            <li  class="nav-item">
+                                <a class="dropdown-item" href="javascript:;">Select Agency</a>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+                <li role="presentation" class="nav-item dropdown open">
+                    <a href="javascript:;" class=" info-number" id="navbarDropdown1" data-toggle="dropdown"
+                        aria-expanded="false" (click)="showAgency()">
+                        <span class="mr-2" *ngIf="selectedAgency"><strong>{{selectedAgency.agency_name}}</strong></span>
+                        <span class="mr-2" *ngIf="!selectedAgency">Change Agency</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu list-unstyled msg_list changeAgency" 
+                        role="menu" aria-labelledby="navbarDropdown1">
+                            <li><input class="search-input" type="text" (keyup)="searchAgency($event)" placeholder="--Search Agency--" /></li>
+                            <li *ngFor="let agency of agencies" class="nav-item">
+                                <a class="dropdown-item" href="javascript:;"
+                                    (click)="onAgencySelect(agency)">{{agency.agency_name}}</a>
+                            </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<ng-template #tickerPopUp>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Welcome   {{userDetail['First_name']}} {{userDetail['Middle_name']}} {{userDetail['Last_name']}}!</h4>
+    </div>
+    <div class="modal-body">
+        <p style="font-size: 18px;">Daily Notifications:</p>
+        <ul>
+            <li *ngFor="let ticker of tickers">{{ticker['aarc_value']}}(Expires: {{ticker['aarc_desc']}}) &nbsp; &nbsp; &nbsp;  {{ticker['agency_name']}}</li>
+        </ul>
+       <br>
+            <div *ngIf="isShowLoader" style="display: flex; justify-content: center;align-items: center;">
+            <img src="../../../assets/images/loader.gif" style="height:100px; width: 100px;">
+        </div>
+        <br>
+        <span style="font-size: 18px;"><img src="../../../assets/images/calendar.png" style="height:25px; width: 30px;padding-bottom: 4px;">Who's Out</span>
+        <div>
+            <h2 *ngIf="whosOutTodayList.length>0" style="text-align:left;font-weight: 600; color: #555;font-size: 15px;">TODAY ({{whosOutTodayList.length}})</h2>
+        </div>
+       <div *ngIf="whosOutTodayList.length>0;else nodatamodal" style="overflow: visible; align-content:start;height: auto; ">
+       <div *ngFor="let outlist of whosOutTodayList">
+        <div class="row">
+            <div class="column" style="width: 30%;">
+              <img src={{outlist.image}} style="height: 100%; width: 70%;border-radius: 50%;">
+            </div>
+            <div class="column" style="width: 70%">
+              <table style="margin-top: 18px;">
+              <tr>
+              <td>{{outlist.name}}</td>
+              </tr>
+              <tr>
+              <td *ngIf="outlist.showDate">Out until {{outlist.outUntilMessage}}</td>
+              </tr>
+              </table>
+            </div>
+          </div>
+          <hr>
+        </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+    </div>
+    <ng-template #nodatamodal>
+        <div style="color: #686868;">
+            <h2>Nobody requested time off for {{CurrentDate}}</h2>
+        </div>
+        </ng-template>
+
+
+ </ng-template>

@@ -1,0 +1,216 @@
+<div>
+    <div class="row">
+        <div class="col-md-12 py-4">
+            <div class="detail-1" *ngIf="selectedAgency"><strong>{{selectedAgency.agency_name}}</strong> </div>
+            <div class="detail-1" *ngIf="!selectedAgency">No Agency Selected !!</div>
+        </div>
+    </div>
+    <div class="row" *ngIf="selectedAgency">
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Mailing Address
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedAgency.agency_maddr1}}
+                {{selectedAgency.agency_maddr2}}
+                {{selectedAgency.agency_mcity}}
+                {{selectedAgency.agency_mstate}}
+                {{selectedAgency.agency_mzip}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Address
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedAgency.agency_addr1}}
+                {{selectedAgency.agency_addr2}}
+                {{selectedAgency.agency_city}}
+                {{selectedAgency.agency_state}}
+                {{selectedAgency.agency_zip}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+               Phone
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedAgency.agency_phone}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Text
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedAgency.agency_text}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Fax
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedAgency.agency_fax}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Website
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <a
+            style="word-wrap: break-word;"
+            href="{{selectedAgency.agency_web}}" target="_blank">{{selectedAgency.agency_web}}</a>
+            <!-- {{selectedAgency.agency_web}} -->
+            <!-- <div class="detail-2">
+                {{selectedAgency.agency_web}}
+            </div> -->
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                License #
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedAgency.agency_license}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                State Appointments
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedAgency.agency_state_appts}}
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Agency Notes
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2" style="white-space: pre-line;">
+                {{selectedAgency.agency_notes}}
+            </div>
+        </div>
+        <!-- <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2" *ngIf="ticker">
+                {{ticker['aarc_value']}} (Expires: {{ticker['aarc_desc']}})
+                {{selectedAgency.agency_notes}}
+            </div>
+        </div> -->
+        <!-- <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Notes
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedAgency.agency_notes}}
+            </div>
+        </div> -->
+    </div>
+
+    <!-- other information -->
+    <!-- <div class="row" >
+        <div class="col-md-12 py-4">
+            <div class="detail-1" *ngIf="selectedCarrier"><strong>{{selectedCarrier.carrier_name}}</strong></div>
+            <div class="detail-1" *ngIf="!selectedCarrier">No Carrier Selcted !!</div>
+        </div>
+    </div> -->
+    <!-- <div class="row" *ngIf="selectedCarrier">
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Mailing Address
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedCarrier.carrier_maddr1}}
+                {{selectedCarrier.carrier_maddr2}}
+                {{selectedCarrier.carrier_mcity}}
+                {{selectedCarrier.carrier_mstate}}
+                {{selectedCarrier.carrier_mzip}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Address
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedCarrier.carrier_addr1}}
+                {{selectedCarrier.carrier_addr2}}
+                {{selectedCarrier.carrier_city}}
+                {{selectedCarrier.carrier_state}}
+                {{selectedCarrier.carrier_zip}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Speed Dial Ext
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedCarrier.carrier_speed_dial}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+               Phone
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedCarrier.carrier_phone}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Fax
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedCarrier.carrier_fax}}
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Website
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <a style="word-wrap: break-word;" href="{{selectedCarrier.carrier_web}}"
+             target="_blank"> {{selectedCarrier.carrier_web}}</a>
+        </div>
+        <div class="col-md-4 col-sm-4 col-3 pb-10">
+            <div class="detail-1">
+                Email
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-7 col-7 pb-10">
+            <div class="detail-2">
+                {{selectedCarrier.carrier_email}}
+            </div>
+        </div>
+    </div> -->
+</div>

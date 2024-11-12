@@ -1,0 +1,141 @@
+<div class="container body">
+    <form class="add-user-form" [formGroup]="addUserForm" (ngSubmit)="submit()">
+        <!-- <div class="row header mb-4">
+            <div class="col-6">
+                <div class="header">
+                    <h4 class="mb-0">Add New User</h4>
+                </div>
+            </div>
+        </div> -->
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">{{title}}</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
+               <span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <div class="modal-body">
+
+        
+        <div class="row">
+            <div class="col-sm-12 col-12">
+                <div class="form-group">
+                    <select formControlName="selectedTeam" id="selectedTeam" class="form-control" multiple>
+                        <option value="">Select a Team</option>
+                        <option *ngFor="let team of teams" [ngValue]="team.team_id">
+                            {{team.team_name}}
+                        </option>
+                    </select>
+                    <div *ngIf="submitted && f.selectedTeam.errors" style="display: block ;" class="invalid-feedback">
+                        <div *ngIf="f.selectedTeam.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-12">
+                <div class="form-group">
+                    <select id="selectedSecurity" class="form-control" formControlName="selectedSecurity"
+                        id="selectedSecurity">
+                        <option value="">Select a Security Level</option>
+                        <option *ngFor="let security of securities" [ngValue]="security.sec_code">
+                            {{security.sec_code}}
+                        </option>
+                    </select>
+                    <div *ngIf="submitted && f.selectedSecurity.errors" class="invalid-feedback" style="display: block ;">
+                        <div *ngIf="f.selectedSecurity.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="First Name">
+                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.firstName.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last name">
+                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.lastName.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="suffix" formControlName="suffix" placeholder="Suffix">
+                    <div *ngIf="submitted && f.suffix.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.suffix.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="MiddleName" formControlName="MiddleName" placeholder="Middle Name">
+                    <div *ngIf="submitted && f.MiddleName.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.MiddleName.errors.required">Required</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="moileNumber" formControlName="moileNumber" placeholder="Mobile Number">
+                    <div *ngIf="submitted && f.moileNumber.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.moileNumber.errors.required">Required</div>
+                    </div>
+                    <div *ngIf="submitted && f.moileNumber.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.moileNumber.errors.pattern">Please enter valid Mobile</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" placeholder="Phone Number">
+                    <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.phoneNumber.errors.required">Required</div>
+                    </div>
+                    <div *ngIf="submitted && f.phoneNumber.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.phoneNumber.errors.pattern">Please enter valid Phone Number</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-12">
+                <div class="form-group">
+                    <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.email.errors.required">Required</div>
+                    </div>
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback" style="display:block">
+                        <div *ngIf="f.email.errors.pattern">Please enter valid email</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-sm-6 col-12">
+                <div class="form-group">
+                    <button type="button" class="btn cancle-btn btn-block" (click)="close()">Cancel</button>
+                </div>
+            </div>
+            <div class="col-sm-6 col-12">
+                <div class="form-group" *ngIf="!isEdit">
+                    <button type="button" class="btn add-user btn-block" (click)="submit()">Add User</button>
+                </div>
+                <div class="form-group" *ngIf="isEdit">
+                    <button type="button" class="btn add-user btn-block" (click)="EditUser()">Edit User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
