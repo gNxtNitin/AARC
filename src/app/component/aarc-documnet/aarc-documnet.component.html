@@ -4,32 +4,35 @@
         (keyup)="searchDocument($event)" placeholder="Search Document">
     </div>
     <div class="col-4">
-        <button 
-        *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
+        <button *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'"
         (click)="AddDocument(addDocument)" 
         class="action-btn">Add Document</button>
     </div>
 </div>
 
-<div>
+<div class="vh-scroll-1">
     <div class="x_panel tile">
-        <div class="x_title row"  (click)="AcordFormsClick()">
+        <div class="x_title row"  (click)="AAIFormsClick()">
             <div class="col-10">
-                <h4 class="d-inline-block m-0">Acord Forms</h4>
+                <h4 class="d-inline-block m-0">AAI Forms</h4>
             </div>
             <div class="col-2 text-right">
-                <a class="collapse-link" (click)="AcordFormsClick()"><i
-                        [ngClass]="showAcord?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+                <a class="collapse-link" (click)="AAIFormsClick()"><i
+                        [ngClass]="showAAI?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
             </div>
         </div>
-        <div class="x_content pt-3" [ngClass]="showAcord?'show':'hide'">
+        <div class="x_content pt-3" [ngClass]="showAAI?'show':'hide'">
             <div class="row detail-2 contact-header">
-                <div class="col-10">Name</div>
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
                 <div class="col-2">Delete</div>
             </div>
-            <div class="row" *ngFor="let acord of acordForms">
-                <div class="col-md-10 col-sm-10 col-10">
+            <div class="row" *ngFor="let acord of aaiForms">
+                <div class="col-md-8 col-sm-8 col-12">
                     <a class="detail-1" href="{{docLink + acord.doc_name}}" target="_blank">{{acord.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(acord,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
                 </div>
                 <div class="col-2">
                     <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(acord)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
@@ -39,9 +42,99 @@
     </div>
 
     <div class="x_panel tile">
+        <div class="x_title row"  (click)="AAIDwellingFireFormsClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">AAI Dwelling Fire Forms</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="AAIDwellingFireFormsClick()"><i
+                        [ngClass]="showAAIDwellingFire?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showAAIDwellingFire?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let aaidw of AAIDwellingFireForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + aaidw.doc_name}}" target="_blank">{{aaidw.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(aaidw,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(aaidw)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="AAIQuoteSheetsandChecklistsFormsClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">AAI Quote Sheets and Checklists</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="AAIQuoteSheetsandChecklistsFormsClick()"><i
+                        [ngClass]="showAAIQuoteSheetsandChecklists?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showAAIQuoteSheetsandChecklists?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let aaiqa of AAIQuoteSheetsandChecklistsForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + aaiqa.doc_name}}" target="_blank">{{aaiqa.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(aaiqa,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(aaiqa)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="AgencySpecificFormsClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Agency Specific Forms</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="AgencySpecificFormsClick()"><i
+                        [ngClass]="showAgencySpecific?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showAgencySpecific?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let aaiqa of AAIQuoteSheetsandChecklistsForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + aaiqa.doc_name}}" target="_blank">{{aaiqa.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(aaiqa,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(aaiqa)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
         <div class="x_title row"  (click)="BillingClick()">
             <div class="col-10">
-                <h4 class="d-inline-block m-0">Billing</h4>
+                <h4 class="d-inline-block m-0">Billing Forms</h4>
             </div>
             <div class="col-2 text-right">
                 <a class="collapse-link" (click)="BillingClick()"><i
@@ -50,12 +143,16 @@
         </div>
         <div class="x_content pt-3" [ngClass]="showBilling?'show':'hide'">
             <div class="row detail-2 contact-header">
-                <div class="col-10">Name</div>
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
                 <div class="col-2">Delete</div>
             </div>
             <div class="row" *ngFor="let billing of billings">
-                <div class="col-md-10 col-sm-10 col-10">
+                <div class="col-md-8 col-sm-8 col-2">
                     <a class="detail-1" href="{{docLink + billing.doc_name}}" target="_blank">{{billing.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(billing,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
                 </div>
                 <div class="col-2">
                     <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(billing)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
@@ -65,52 +162,120 @@
     </div>
 
     <div class="x_panel tile">
-        <div class="x_title row"  (click)="QuoteClick()">
+        <div class="x_title row"  (click)="BasicAcordFormsClick()">
             <div class="col-10">
-                <h4 class="d-inline-block m-0">Quote Sheets</h4>
+                <h4 class="d-inline-block m-0">Basic Acord Forms</h4>
             </div>
             <div class="col-2 text-right">
-                <a class="collapse-link" (click)="QuoteClick()"><i
-                        [ngClass]="showQuote?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+                <a class="collapse-link" (click)="BasicAcordFormsClick()"><i
+                        [ngClass]="showBasicAcordForms?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
             </div>
         </div>
-        <div class="x_content pt-3" [ngClass]="showQuote?'show':'hide'">
+        <div class="x_content pt-3" [ngClass]="showBasicAcordForms?'show':'hide'">
             <div class="row detail-2 contact-header">
-                <div class="col-10">Name</div>
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
                 <div class="col-2">Delete</div>
             </div>
-            <div class="row" *ngFor="let quote of quotes">
-                <div class="col-md-10 col-sm-10 col-10">
-                    <a class="detail-1" href="{{docLink + quote.doc_name}}" target="_blank">{{quote.doc_name}}</a>
+            <div class="row" *ngFor="let baf of BasicAcordForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + baf.doc_name}}" target="_blank">{{baf.doc_name}}</a>
                 </div>
                 <div class="col-2">
-                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(quote)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(baf,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(baf)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="x_panel tile">
-        <div class="x_title row"  (click)="SupplementalClick()">
+        <div class="x_title row"  (click)="CanineFormsClick()">
             <div class="col-10">
-                <h4 class="d-inline-block m-0">Supplemental Forms</h4>
+                <h4 class="d-inline-block m-0">Canine Forms</h4>
             </div>
             <div class="col-2 text-right">
-                <a class="collapse-link" (click)="SupplementalClick()"><i
-                        [ngClass]="showSupplemental?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+                <a class="collapse-link" (click)="CanineFormsClick()"><i
+                        [ngClass]="showCanineForms?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
             </div>
         </div>
-        <div class="x_content pt-3" [ngClass]="showSupplemental?'show':'hide'">
+        <div class="x_content pt-3" [ngClass]="showCanineForms?'show':'hide'">
             <div class="row detail-2 contact-header">
-                <div class="col-10">Name</div>
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
                 <div class="col-2">Delete</div>
             </div>
-            <div class="row" *ngFor="let supplement of supplementForms">
-                <div class="col-md-10 col-sm-10 col-10">
-                    <a class="detail-1" href="{{docLink + supplement.doc_name}}" target="_blank">{{supplement.doc_name}}</a>
+            <div class="row" *ngFor="let canf of CanineForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + canf.doc_name}}" target="_blank">{{canf.doc_name}}</a>
                 </div>
                 <div class="col-2">
-                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(supplement)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(canf,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(canf)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="CaqceFormsClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Carrier Application, Quote Requests, Coverage and Exclusion Forms</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="CaqceFormsClick()"><i
+                        [ngClass]="showCaqceForms?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showCaqceForms?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let caqce of CaqceForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + caqce.doc_name}}" target="_blank">{{caqce.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(caqce,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(caqce)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="DiscountsCreditsFormsClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Discounts and Credits</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="DiscountsCreditsFormsClick()"><i
+                        [ngClass]="showDiscountsCreditsForms?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showDiscountsCreditsForms?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let dcf of DiscountsCreditsForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + dcf.doc_name}}" target="_blank">{{dcf.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(dcf,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(dcf)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
                 </div>
             </div>
         </div>
@@ -128,15 +293,169 @@
         </div>
         <div class="x_content pt-3" [ngClass]="showMis?'show':'hide'">
             <div class="row detail-2 contact-header">
-                <div class="col-10">Name</div>
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
                 <div class="col-2">Delete</div>
             </div>
             <div class="row" *ngFor="let misc of miscellaneous">
-                <div class="col-md-10 col-sm-10 col-10">
+                <div class="col-md-8 col-sm-8 col-12">
                     <a class="detail-1" href="{{docLink + misc.doc_name}}" target="_blank">{{misc.doc_name}}</a>
                 </div>
                 <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(misc,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
                     <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(misc)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="MotorVehicleFormsClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Motor Vehicle Forms</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="MotorVehicleFormsClick()"><i
+                        [ngClass]="showMotorVehicleForms?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showMotorVehicleForms?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let mv of MotorVehicleForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + mv.doc_name}}" target="_blank">{{mv.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(mv,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(mv)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="SupplementalClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Supplemental Forms</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="SupplementalClick()"><i
+                        [ngClass]="showSupplemental?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showSupplemental?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let supplement of supplementForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + supplement.doc_name}}" target="_blank">{{supplement.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(supplement,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(supplement)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="SurplusLinesFormsClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Surplus Lines Forms</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="SurplusLinesFormsClick()"><i
+                        [ngClass]="showSurplusLinesForms?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showSurplusLinesForms?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let slf of SurplusLinesForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + slf.doc_name}}" target="_blank">{{slf.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(slf,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(slf)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="WoodStoveFormsClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Wood Stove Forms</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="WoodStoveFormsClick()"><i
+                        [ngClass]="showWoodStoveForms?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showWoodStoveForms?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let wsf of WoodStoveForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + wsf.doc_name}}" target="_blank">{{wsf.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(wsf,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(wsf)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="x_panel tile">
+        <div class="x_title row"  (click)="WorkersCompensationFormsClick()">
+            <div class="col-10">
+                <h4 class="d-inline-block m-0">Workers Compensation Forms</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a class="collapse-link" (click)="WorkersCompensationFormsClick()"><i
+                        [ngClass]="showWorkersCompensationForms?'fa fa-chevron-up':'fa fa-chevron-down'"></i></a>
+            </div>
+        </div>
+        <div class="x_content pt-3" [ngClass]="showWorkersCompensationForms?'show':'hide'">
+            <div class="row detail-2 contact-header">
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
+                <div class="col-2">Delete</div>
+            </div>
+            <div class="row" *ngFor="let wcf of WorkersCompensationForms">
+                <div class="col-md-8 col-sm-8 col-12">
+                    <a class="detail-1" href="{{docLink + wcf.doc_name}}" target="_blank">{{wcf.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(wcf,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(wcf)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
                 </div>
             </div>
         </div>
@@ -154,12 +473,16 @@
         </div>
         <div class="x_content pt-3" [ngClass]="showGuideline?'show':'hide'">
             <div class="row detail-2 contact-header">
-                <div class="col-10">Name</div>
+                <div class="col-8">Name</div>
+                <div class="col-2">Edit</div>
                 <div class="col-2">Delete</div>
             </div>
             <div class="row" *ngFor="let guide of guidelines">
-                <div class="col-md-10 col-sm-10 col-10">
+                <div class="col-md-8 col-sm-8 col-12">
                     <a class="detail-1" href="{{docLink + guide.doc_name}}" target="_blank">{{guide.doc_name}}</a>
+                </div>
+                <div class="col-2">
+                    <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="OpenEdit(guide,changeDocCategory)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
                 </div>
                 <div class="col-2">
                     <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deletedocx(guide)" class="fa fa-trash-o action-icon" title="Delete" aria-hidden="true"></i>
@@ -198,5 +521,34 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-default" (click)="UploadDocumentToServer()">Submit</button>
         <button type="button" class="btn btn-default" (click)="close()">Close</button>
+     </div>
+ </ng-template>
+
+ <ng-template #changeDocCategory>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Change Document Category </h4>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-2">
+            <div class="form-control">
+                <input style="border: 0; color: #222222;font-weight: 550;width: 100%;" type="text" id="docname" [readonly]="true" [value]="this.CategoryFullName">
+            </div>
+           </div>
+        <div class="row">
+            <select class="form-control" [(ngModel)]="selectedDocType">
+                <option value="" disabled>Document Type</option>
+                <option *ngFor="let docType of DocTypes" [ngValue]="docType.id">
+                    {{docType.value}}
+                </option>
+            </select>
+            <div *ngIf="submitted && (selectedDocType == '')" class="invalid-feedback" style="display:block">
+                <div>Required</div>
+            </div>
+        </div>
+       
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="UpdateDocumentCategory()">Update</button>
+        <button type="button" class="btn btn-default" (click)="closeDocPopup(changeDocCategory)">Close</button>
      </div>
  </ng-template>

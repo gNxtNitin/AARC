@@ -18,7 +18,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   templateUrl: './agency-admin.component.html',
   styleUrls: ['./agency-admin.component.scss'],
   host: {
-    class: 'col-md-8 col-sm-12 pt-2',
+    class: 'col-md-8 col-sm-12 pt-2 vh-scroll',
   }
 })
 export class AgencyAdminComponent implements OnInit {
@@ -477,6 +477,7 @@ export class AgencyAdminComponent implements OnInit {
       Phone: this.f.phoneNumber.value.toString(),
       Email: this.f.email.value,
       Notes: this.f.notes.value,
+      Noservicechk: this.f.noservicechk.value,
     };
     this.spinnerService.show();
     this.agencyService

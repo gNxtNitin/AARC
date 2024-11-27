@@ -14,7 +14,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   templateUrl: './carrier-manintainance.component.html',
   styleUrls: ['./carrier-manintainance.component.scss'],
   host: {
-    class: 'col-md-8 col-sm-12 pt-2',
+    class: 'col-md-8 col-sm-12 pt-2 vh-scroll',
   },
 })
 export class CarrierManintainanceComponent implements OnInit {

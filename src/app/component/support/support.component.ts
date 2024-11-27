@@ -10,7 +10,7 @@ import { UserService } from 'src/app/service/user.service';
   templateUrl: './support.component.html',
   styleUrls: ['./support.component.scss'],
   host: {
-    class: 'col-md-8 col-sm-12 pt-2',
+    class: 'col-md-8 col-sm-12 pt-2 vh-scroll',
   },
 })
 export class SupportComponent {

@@ -160,5 +160,25 @@ export class TeamService {
       })
     );
   }
+
+  editAARCTeam(teamId: any, name:any) {
+    return this.http
+      .post<any>(`${Constant.API_ENDPOINT}Team/UpdateTeam/${teamId}/${name}`,{})
+      .pipe(
+        map((res) => {
+          return res;
+        })
+      );
+  }
+
+  deleteAARCTeam(teamId: any) {
+    return this.http
+      .delete<any>(`${Constant.API_ENDPOINT}Team/team/${teamId}`,{})
+      .pipe(
+        map((res) => {
+          return res;
+        })
+      );
+  }
 }
 

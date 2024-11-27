@@ -110,4 +110,23 @@ export class UserService {
       return res;
       }));
     }
+
+    getUsersProdCodes(docx:any)
+    {
+      //console.log(docx);
+      return this.http.post<any>(`${Constant.API_ENDPOINT}User/UserProdCodes`,docx)
+      .pipe(map(res => {
+        return res;
+        }));
+    }
+
+    deleteActiveUser(userid: any)
+    {
+      console.log(userid);
+      return this.http
+        .get<any>(`${Constant.API_ENDPOINT}User/DeleteUsers/${userid}`)
+        .pipe(map((res)=>{
+          return res;
+        }));
+    }
 }

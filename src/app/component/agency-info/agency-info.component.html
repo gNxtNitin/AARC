@@ -164,18 +164,18 @@
                 <div class="row detail-2 contact-header">
                     <div class="col-3">Name/Department</div>
                     <div class="col-2">Title/Position</div>
-                    <div class="col-2">Phone</div>
+                    <!-- <div class="col-2">Phone</div> -->
                     <div class="col-2">Email</div>
                     <div class="col-1" *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'">Edit</div>
                     <div class="col-1" *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'">Order</div>
                     <div class="col-1" *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'">Delete</div>
                 </div>
 
-                <div class="row mb-15" *ngFor="let contact of agencyContact;let i=index;">
+                <div class="row mb-15" style="border-bottom: 1px solid #ccc;padding-bottom: 5px;" *ngFor="let contact of agencyContact;let i=index;">
                     <div class="col-3 detail-1">{{contact.contact_first_name}} {{contact.contact_middle_name}}
                         {{contact.contact_last_name}}</div>
                         <div class="col-2 detail-1">{{contact.contact_notes}}</div>
-                    <div class="col-2 detail-1" >{{contact.contact_phone}}</div>
+                    <!-- <div class="col-2 detail-1" >{{contact.contact_phone}}</div> -->
                     <div class="col-2 detail-1" style="overflow-wrap: break-word;">{{contact.contact_email}}</div>
                     <div class="col-1"  *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'">
                         <i (click)="OpenEdit(contact,addAgencyContact)" class="fa fa-pencil action-icon" title="Edit" aria-hidden="true"></i>
@@ -303,11 +303,12 @@
                     <div class="col-3">Delete Carrier</div>
                 </div>
 
-                <div class="row" *ngFor="let carrier of carriers">
+                <div class="row border-bottom py-2" *ngFor="let carrier of carriers">
                     <div class="col-7 detail-1">{{carrier.carrier_name}}</div>
-                    <div (click)="ViewPC(viewpc,carrier)" class="col-2 detail-1"  *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"> <i class="fa fa-eye action-icon" aria-hidden="true" title="View PC"></i> </div>
-                    <div (click)="DeleteCarrier(carrier)" class="col-3 detail-1"  *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"><i class="fa fa-trash-o action-icon" title="Delete"
-                            aria-hidden="true"></i></div>
+                    <div (click)="ViewPC(viewpc,carrier)" class="col-2 detail-1"  *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"> <i class="fa fa-eye action-icon" aria-hidden="true" title="View PC"></i></div>
+                    <div (click)="DeleteCarrier(carrier)" class="col-3 detail-1 pl-5"  *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"><i class="fa fa-trash-o action-icon" title="Delete"
+                            aria-hidden="true"></i></div>  
+                                   
                 </div>
             </div>
         </div>
@@ -367,7 +368,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6 col-12">
+                <!-- <div class="col-sm-6 col-12">
                     <div class="form-group">
                         <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber"
                             placeholder="Phone Number">
@@ -378,8 +379,8 @@
                             <div *ngIf="f.phoneNumber.errors.pattern">Enter valid Number</div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-6 col-12">
+                </div> -->
+                <div class="col-sm-12 col-12">
                     <div class="form-group">
                         <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback" style="display:block">
@@ -405,34 +406,38 @@
             <div class="row">
                 <div class="col-sm-12 col-12">
                     <div class="form-group">
-                        <textarea class="form-control" id="titleposition" placeholder="Title/Position"></textarea>
+                        <textarea class="form-control" id="titleposition" placeholder="Title/Position" formControlName="notes" (input)="uncheckalltextbox()"></textarea>
                     </div>
                 </div>
             </div>
             <br>
-            <!-- <div class="row">
-                <div class="col-sm-6 col-12">
+            <div class="row">
+                <div class="col-sm-6 col-12 mb-2">
                     <div class="form-group single-line-row">
-                        <input type="radio" id="directtochk" class="slectOne" name="option" style="height: 23px; width: 30px;">
-                        <label style="font-size: 16px; text-align: center;">Direct to</label>
-                        <input type="text" id="directtotxt" formControlName="phoneNumber">
+                        <input type="radio" name="RadioBtn" id="Directchk" style="height: 23px; width: 30px;" [checked]="isChkBoxEnabled" (click)="setradio('Direct to')" >
+                        <label style="font-size: 16px; text-align: center; margin-bottom: 0;margin-left: 10px;">Direct to</label>
+                        <input type="text" class="form-control" id="Directtxt" [readOnly]="!isTextBoxEnabled" formControlName="Directtxt" (change)="changenotestext()">
                     </div>
                 </div>
-                <div class="col-sm-6 col-12">
+    
+                <div class="col-sm-6 col-12 mb-2">
+                    <div class="form-group single-line-row">
+                        <input type="radio" class="form-control" id="Noservicechk" name="RadioBtn" [checked]="isChkBoxEnabled" (click)="setradio('NA- Service Not Offered')" style="height: 23px; width: 30px;">
+                        <label style="margin-left: 10px;font-size: 16px;margin-bottom: 0; margin-right: 0;">NA- Service Not Offered</label>
+                    </div>
+                </div>
+                <div class="col-sm-8 col-12">
                     <div class="form-group d-flex">
-                        <input type="radio" id="requestchk" class="slectOne" name="option" style="height: 23px; width: 30px;">
+                        <input type="radio" class="form-control" id="Requestchk" name="RadioBtn" [checked]="isChkBoxEnabled" (click)="setradio('AAI by Request/ If on Vacation Only')" style="height: 23px; width: 30px;">
                         <label style="margin-left: 10px;font-size: 16px;">AAI by Request/ If on Vacation Only</label>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 col-12">
-                    <div class="form-group single-line-row">
-                        <input type="radio" id="noservicechk" class="slectOne" name="option" style="height: 23px; width: 30px;">
-                        <label style="margin-left: 10px;font-size: 16px;">NA- Service Not Offered</label>
+                <div class="col-sm-4 col-12" style="display: none;">
+                    <div class="form-group d-flex">
+                        <input type="radio" class="form-control" formControlName="defaulttchk" id="defaulttchk" name="RadioBtn" [checked]="isChkBoxEnabled" style="height: 23px; width: 30px;">
                     </div>
                 </div>
-            </div> -->
+            </div> 
             <div class="row pt-3">
                 <div class="col-sm-6 col-12">
                     <div class="form-group">

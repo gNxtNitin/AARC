@@ -2392,3 +2392,23 @@ a.btn-success, a.btn-primary, a.btn-warning, a.btn-danger {
   {
     display: none;
   }
+
+  @media screen and (min-width: 576px) and (max-width:2000px) {
+    .modal-dialog{
+      max-width: 800px !important;
+      margin: 1.75rem auto;
+    }
+  }
+  .side-nav-scroll{
+    height: calc(100vh - 0px) !important;
+    overflow-y: auto;
+
+  }
+  .vh-scroll{
+    height: calc(100vh - 78px);
+    overflow-y: auto;
+  }
+  .vh-scroll-1{
+    height: calc(100vh - 129px);
+    overflow-y: auto;
+  }

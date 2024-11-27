@@ -17,7 +17,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   templateUrl: './team-info.component.html',
   styleUrls: ['./team-info.component.scss'],
   host: {
-    class: 'col-md-8 col-sm-12 pt-2',
+    class: 'col-md-8 col-sm-12 pt-2 vh-scroll',
   }
 })
 export class TeamInfoComponent implements OnInit {
@@ -57,6 +57,7 @@ export class TeamInfoComponent implements OnInit {
   agencies :any;
   selectedAgencyForAdd:any;
   addAgencySubmitted = false;
+  newTeamName:[''];
 
   modalRef: BsModalRef = {
     hide: function (): void {
@@ -269,6 +270,7 @@ export class TeamInfoComponent implements OnInit {
     }
     this.teamService.addAARCTeam(this.f.teamId.value,this.f.teamName.value).subscribe((r:any)=>{
       this.modalRef.hide();
+      this.toastService.showSuccess("Team Added Successfully","Success");
     })
   }
 
@@ -431,5 +433,33 @@ export class TeamInfoComponent implements OnInit {
       this.toastService.showSuccess("Agency added successfully","Success");
       this.modalRef.hide();
     })
+  }
+
+  TeamModified() {
+    if (this.selectedTeam && this.selectedTeam.length > 0 && this.newTeamName)
+    {
+      this.teamService.editAARCTeam(this.selectedTeam,this.newTeamName).subscribe((r:any)=>{
+        this.modalRef.hide();
+      })
+      this.newTeamName = [''];
+      this.selectedTeam='';
+      this.modalRef.hide();
+      this.toastService.showSuccess("Team Name Modified Successfully","Success");
+    }
+    //this.toastService.showError("Please Provide Correct Details to Modify Team Name","Error");
+  }
+
+  TeamDelete() {
+    debugger;
+    if (this.selectedTeam && this.selectedTeam.length > 0)
+    {
+      this.teamService.deleteAARCTeam(this.selectedTeam).subscribe((r:any)=>{
+        this.modalRef.hide();
+      })
+      this.newTeamName = [''];
+      this.modalRef.hide();
+      this.toastService.showSuccess("Team Name Deleted Successfully","Success");
+    }
+    //this.toastService.showError("Please Select at least 1 Team to Delete","Error");
   }
 }

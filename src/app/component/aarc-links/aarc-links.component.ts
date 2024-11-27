@@ -10,7 +10,7 @@ import { ToastService } from 'src/app/service/toast-service';
   templateUrl: './aarc-links.component.html',
   styleUrls: ['./aarc-links.component.scss'],
   host: {
-    class: 'col-md-8 col-sm-12 pt-2',
+    class: 'col-md-8 col-sm-12 pt-2 vh-scroll',
   }
 })
 export class AarcLinksComponent implements OnInit {

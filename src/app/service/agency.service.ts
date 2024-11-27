@@ -442,4 +442,15 @@ export class AgencyService {
     );
   }
 
+  changeDocCategory(OldCategoryCode:any,OldCategoryName:any,NewDocumentCatCode:any)
+  {
+    return this.http
+    .post<any>(`${Constant.API_ENDPOINT}Document/${OldCategoryCode}/${OldCategoryName}/${NewDocumentCatCode}`,{})
+    .pipe(
+      map((res) => {
+        return res;
+      })
+    );
+  }
+
 }

@@ -5,16 +5,23 @@
             <strong>
               {{team['team_name']}}
             </strong>
-            <button 
-            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+            <button *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+            style="margin-left: 10px ;"
+            (click)="Selectteam(deleteteamTemplate)" 
+            class="action-btn">Delete Team</button>
+            <button *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
              style="margin-left: 10px ;"
              (click)="Selectteam(selectteamTemplate)" 
-             class="action-btn"
-             >Select Team</button>
+             class="action-btn">Select Team</button>
+             <button *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+              style="margin-left: 10px ;"
+              (click)="Selectteam(editteamTemplate)" 
+              class="action-btn">Edit Team</button>  
             <button style="margin-left: 10px ;"
             *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
              (click)="OpenAddTeam(teamAddTemplate)"
-             class="action-btn">Add Team</button>    
+             class="action-btn">Add Team</button>  
+
         </div>
     </div>
 <div>
@@ -287,6 +294,51 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" (click)="AddMember()">Submit</button>
+       <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+    </div>
+ </ng-template>
+
+ <ng-template #editteamTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Edit Team</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <select class="form-control" [(ngModel)]="selectedTeam">
+            <option value="" disabled>Select Team</option>
+            <option *ngFor="let team of teams" [ngValue]="team.team_id">
+                {{team.team_name}}
+            </option>
+        </select>
+    </div>
+    <div class="modal-body">
+        <input type="text" class="form-control" id="newteamname" [(ngModel)]="newTeamName" placeholder="New Team Name">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="TeamModified()">Update</button>
+       <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+    </div>
+ </ng-template>
+
+ <ng-template #deleteteamTemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Delete Team</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <select class="form-control" [(ngModel)]="selectedTeam">
+            <option value="" disabled>Select Team</option>
+            <option *ngFor="let team of teams" [ngValue]="team.team_id">
+                {{team.team_name}}
+            </option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="TeamDelete()">Delete</button>
        <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
     </div>
  </ng-template>

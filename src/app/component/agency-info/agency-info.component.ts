@@ -16,7 +16,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
   templateUrl: './agency-info.component.html',
   styleUrls: ['./agency-info.component.scss'],
   host: {
-    class: 'col-md-8 col-sm-12 pt-2',
+    class: 'col-md-8 col-sm-12 pt-2 vh-scroll',
   },
 })
 export class AgencyInfoComponent implements OnInit {
@@ -60,6 +60,9 @@ export class AgencyInfoComponent implements OnInit {
   viewedCarrier:any = {};
   timeZone = '';
   timeZoneList=[];
+  isNooservicechk: boolean = false;
+  isTextBoxEnabled: boolean = false;
+  isChkBoxEnabled: boolean = false;
 
   constructor(
     private dataSharingService: DataSharingService,
@@ -91,6 +94,11 @@ export class AgencyInfoComponent implements OnInit {
       MiddleName: [''],
       suffix: [''],
       notes: [''],
+      Noservicechk:[false],
+      Requestchk:[false],
+      Directchk:[false],
+      defaulttchk:[false],
+      Directtxt: [''],
       phoneNumber: [
         ''],
       email: [
@@ -326,6 +334,9 @@ export class AgencyInfoComponent implements OnInit {
     return this.addAgenctyContactForm.controls;
   }
   OpenAddContact(template: any) {
+    this.isChkBoxEnabled=false;
+    this.f.Directtxt.setValue('');
+    this.f.notes.setValue('');
     this.isAddContact = true;
     this.model_title = 'Add Agency Contact';
     this.modalService.show(template, { backdrop: 'static' });
@@ -362,7 +373,11 @@ export class AgencyInfoComponent implements OnInit {
       });
   }
   OpenEdit(contact: any, template: any) {
+    this.isChkBoxEnabled=false;
+    this.f.Directtxt.setValue('');
+    this.f.notes.setValue('');
     this.model_title = 'Update Agency Contact';
+    this.f.Directtxt.setValue('');
     this.isEditContact = true;
     this.editContactId = contact.contact_id;
     this.f.firstName.setValue(contact.contact_first_name);
@@ -1026,6 +1041,35 @@ export class AgencyInfoComponent implements OnInit {
     this.agencyService.getTimeZone().subscribe(r=> {
     this.timeZoneList = r;
     })
+  }
+
+  setradio(txtvalue:any)
+  {
+    var result = txtvalue
+    if(txtvalue=='Direct to')
+    {
+      this.isTextBoxEnabled=true;
+      result  = 'Direct to'+' '+this.addAgenctyContactForm.controls['Directtxt'].value;
+    }
+    else
+    {
+      this.isTextBoxEnabled=false;
+    }
+    this.f.notes.setValue(result);
+  }
+  changenotestext()
+  {
+    var Directtxtboxval = this.addAgenctyContactForm.controls['Directtxt'].value;
+    this.addAgenctyContactForm.controls['notes'].patchValue('Direct to'+' '+Directtxtboxval);
+  }
+
+  uncheckalltextbox()
+  {
+    debugger;
+    this.isChkBoxEnabled = !this.isChkBoxEnabled;
+    this.isTextBoxEnabled=false;
+    this.f.defaulttchk.setValue(true);
+    this.f.Directtxt.setValue('');
   }
 
 }

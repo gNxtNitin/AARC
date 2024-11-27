@@ -14,7 +14,7 @@ import { UserService } from 'src/app/service/user.service';
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss'],
   host: {
-    class: 'col-md-8 col-sm-12 pt-2',
+    class: 'col-md-8 col-sm-12 pt-2 vh-scroll',
   },
 })
 export class UserInfoComponent implements OnInit {
@@ -31,6 +31,7 @@ export class UserInfoComponent implements OnInit {
   branchCode: any;
   currentUser: any;
   users: any;
+  ProdCodesInfo: any;
   cloneUserForm: any;
   updatePasswordForm: any;
   importCredentailForm: any;
@@ -42,6 +43,8 @@ export class UserInfoComponent implements OnInit {
   userID: any;
   userPW: any;
   producercode: any;
+  selectedAgencyName: any;
+  selectedCarrierName: any;
 
   modalRef: BsModalRef = {
     hide: function (): void {
@@ -195,6 +198,13 @@ export class UserInfoComponent implements OnInit {
     this.modalRef = this.modalService.show(cloneUserTemplate, {backdrop: 'static'});
   }
 
+  deleteUser(deleteUserTemplate: any) {
+    this.userService.getAllUsers().subscribe((response) => {
+      this.users = response;
+    });
+    this.modalRef = this.modalService.show(deleteUserTemplate, {backdrop: 'static'});
+  }
+
   UserSelected() {
     this.spinnerService.show();
     this.userService
@@ -269,6 +279,10 @@ export class UserInfoComponent implements OnInit {
   }
 
   updatePasswordpopup(updatePasswordtemplate: any,userID:any,passwd:any,producercode:any,branch:any) {
+    debugger;
+    this.selectedAgencyName = this.dataSharingService.selectedAgency.agency_name;
+    this.selectedCarrierName = this.dataSharingService.selectedCarrier.carrier_name;
+    this.GetUserInfo(this.dataSharingService.selectedCarrier.carrier_id.toString(),userID,passwd,branch);
     this.userID = userID;
     this.userPW =passwd;
     this.producercode =producercode;
@@ -288,6 +302,7 @@ export class UserInfoComponent implements OnInit {
       let CarrierName = this.dataSharingService.selectedCarrier.carrier_name;
       console.log(this.dataSharingService.selectedCarrier);
       let loggedinUserid =this.dataSharingService.loggedInUser['Email'];
+      let loggedinUserTeamName =this.dataSharingService.loggedInUser['AATeamName'];
       let emailid ="supportcase@agencyadmins.com";
       //let emailid ="mukul@gnxtsystems.com";
       let agencyID = this.dataSharingService.selectedAgency.agency_id;
@@ -298,10 +313,11 @@ export class UserInfoComponent implements OnInit {
       let oldPassword = this.userPW;
       let newPassword = this.upf.NewPassword.value;
 
-      let emailsubject = FirstName +" "+LastName +" "+ "updated the password for "+AgencyName+" – "+CarrierName+"";
+      let emailsubject = FirstName +" "+LastName +" "+"["+loggedinUserTeamName+"]"+" "+ "updated the password for "+AgencyName+" – "+CarrierName+"";
 
       let emailBody = "<table><tr><td>Old Password :</td><td>"+oldPassword+"</td></tr>";
-      emailBody += "<tr><td>New Password :</td><td>"+newPassword+"</td></tr></table>";
+      emailBody += "<tr><td>New Password :</td><td> "+newPassword+"</td></tr></table>";
+      emailBody += "<tr><td>Team :</td><td> "+loggedinUserTeamName+"</td></tr></table>";
 
       this.userService
         .UpdatePasswordEmail({emailid,emailsubject,emailBody,agencyID,carrierID,loggedinUserid,newPassword,producerCode,branchCode})
@@ -320,7 +336,7 @@ export class UserInfoComponent implements OnInit {
         );
     }
     else{
-      this.toastService.showError("Error occured, please enter values",'Password Not Updated' );
+      this.toastService.showError("please enter Correct values",'Password Not Updated' );
       event.target.disabled = false;
     }
   }
@@ -331,4 +347,23 @@ export class UserInfoComponent implements OnInit {
     //this.updatePasswordForm.get('oldPassword')?.reset();
     this.updatePasswordForm.get('NewPassword')?.reset();
   }
+
+  GetUserInfo(carrierId: any,uId: any,password: any,userType: any) {
+    this.userService.getUsersProdCodes({carrierId:carrierId,userid:uId,password:password,branch:userType}).subscribe((response) => {
+      this.ProdCodesInfo = response;
+    });
+    //this.modalRef = this.modalService.show(cloneUserTemplate, {backdrop: 'static'});
+  }
+
+  Deleteuser(user:any){
+    const confirmed = window.confirm('Are you sure you want to delete this User?');
+    if (confirmed) {
+      this.userService.deleteActiveUser(user.AAid)
+      .subscribe((res:any)=>{
+        this.modalService.hide();
+        this.toastService.showSuccess("User Removed successfully","Pasword Change");
+      })
+    }
+  }
+  
 }

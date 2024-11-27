@@ -7,6 +7,10 @@
                 {{currentUser['Middle_name']}}
                 {{currentUser['Last_name']}}
             </strong>
+            <button style="margin-left: 10px ;"
+            *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
+             (click)="deleteUser(deleteUsertemplate)"
+             class="action-btn">Delete User</button>   
             <button 
             *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'"
              style="margin-left: 10px ;"
@@ -334,7 +338,44 @@
     </div>
     <div class="modal-body">
         <form [formGroup]="updatePasswordForm">
-   
+
+            <div class="row mx-0 mb-3 px-1" style="max-height: 300px; overflow-y: auto;">
+                <table class="w-100 ">
+                    <tr style="background: #ccc;">
+                        <th style="padding: 5px; border: 1px solid grey; font-weight: bold; color: #000; width: 40%;">Agency</th>
+                        <th style="padding: 5px; border: 1px solid grey;font-weight: bold; color: #000; width: 30%;">Carrier</th>
+                        <th style="padding: 5px; border: 1px solid grey;font-weight: bold; color: #000; width: 15%;">UserID</th>
+                        <th style="padding: 5px; border: 1px solid grey;font-weight: bold; color: #000; width: 15%;">Password</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px; border: 1px solid grey;">{{selectedAgencyName}}</td>
+                        <td style="padding: 5px; border: 1px solid grey;">{{selectedCarrierName}}</td>
+                        <td style="padding: 5px; border: 1px solid grey;">{{userID}}</td>
+                        <td style="padding: 5px; border: 1px solid grey;">{{userPW}}</td>
+                    </tr>
+                </table>
+                </div>
+            <br>
+            <div *ngIf="ProdCodesInfo.length">
+                <div class="font-weight-bold h6 text-dark">Login affected by the change:</div>
+                <div class="row mx-0 mb-3 px-1" style="max-height: 300px; overflow-y: auto;">
+                <table class="w-100">
+                    <tr style="background: #ccc;">
+                        <th style="padding: 5px; border: 1px solid grey; font-weight: bold; color: #000; width: 40%;">Agency</th>
+                        <th style="padding: 5px; border: 1px solid grey;font-weight: bold; color: #000; width: 30%;">Carrier</th>
+                        <th style="padding: 5px; border: 1px solid grey;font-weight: bold; color: #000; width: 15%;">UserID</th>
+                        <th style="padding: 5px; border: 1px solid grey;font-weight: bold; color: #000; width: 15%;">Password</th>
+                    </tr>
+                    <tr *ngFor="let uinfo of ProdCodesInfo">
+                        <td style="padding: 5px; border: 1px solid grey;">{{uinfo.agency_id}}</td>
+                        <td style="padding: 5px; border: 1px solid grey;">{{uinfo.carrier_id}}</td>
+                        <td style="padding: 5px; border: 1px solid grey;">{{uinfo.userid}}</td>
+                        <td style="padding: 5px; border: 1px solid grey;">{{uinfo.pwd}}</td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-sm-12 col-12">
                     <div class="form-group">
@@ -358,5 +399,38 @@
 
         </form>
     </div>
-    
+  
+ </ng-template>
+
+ <ng-template #deleteUsertemplate>
+    <div class="modal-header">
+       <h4 class="modal-title pull-left">Delete User</h4>
+       <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">×</span>
+       </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="updatePasswordForm">
+            <div class="x_content pt-3">
+                <div class="row detail-2 contact-header " style="border-bottom:1px solid black">
+                    <div class="col-10">Name</div>
+                    <div class="col-2">Delete</div>
+                </div>
+                <div class="row" *ngFor="let user of users">
+                    <div class="col-md-10 col-sm-10 col-12">
+                        <a class="detail-1" target="_blank">{{user.first_name}} {{user.middle_name}} {{user.last_name}}</a>
+                    </div>
+                    <div class="col-2">
+                        <i *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'" (click)="Deleteuser(user)" class="fa fa-trash-o action-icon pl-3" title="Delete" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+             </div>
+
+        </form>
+    </div>
+  
  </ng-template>
