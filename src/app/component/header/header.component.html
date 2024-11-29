@@ -148,22 +148,22 @@
         <br>
         <span style="font-size: 18px;"><img src="../../../assets/images/calendar.png" style="height:25px; width: 30px;padding-bottom: 4px;">Who's Out</span>
         <div>
-            <h2 *ngIf="whosOutTodayList.length>0" style="text-align:left;font-weight: 600; color: #555;font-size: 15px;">TODAY ({{whosOutTodayList.length}})</h2>
+            <h2 *ngIf="whosOutTodayList.length>0" style="text-align:left;font-weight: 600; color: #555;font-size: 15px; margin-bottom: 18px;">TODAY ({{whosOutTodayList.length}})</h2>
         </div>
        <div *ngIf="whosOutTodayList.length>0;else nodatamodal" style="overflow: visible; align-content:start;height: auto; ">
        <div *ngFor="let outlist of whosOutTodayList">
-        <div class="row">
-            <div class="column" style="width: 30%;">
+        <div class="row ">
+            <!-- <div class="column" style="width: 30%;">
               <img src={{outlist.image}} style="height: 100%; width: 70%;border-radius: 50%;">
-            </div>
-            <div class="column" style="width: 70%">
-              <table style="margin-top: 18px;">
+            </div> -->
+            <div class="column" style="width: 70%; height: auto;">
+              <table>
               <tr>
-              <td>{{outlist.name}}</td>
+              <td>{{outlist.id}} . {{outlist.name}} ({{outlist.employeeId}})</td>
               </tr>
-              <tr>
+              <!-- <tr>
               <td *ngIf="outlist.showDate">Out until {{outlist.outUntilMessage}}</td>
-              </tr>
+              </tr> -->
               </table>
             </div>
           </div>

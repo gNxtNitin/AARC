@@ -72,7 +72,7 @@ export class NewsEventService {
 
   whosOutTodayList() {
     return this.http
-      .get<any>(`${Constant.API_ENDPOINT}BambooHr/GetWhosOutList`)
+      .get<any>(`${Constant.API_ENDPOINT}BambooHr/GetDailyNotificationsList`)
       .pipe(
         map((res) => {
           return res;
