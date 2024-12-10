@@ -93,6 +93,7 @@ export class AarcLinksComponent implements OnInit {
   loadLinks()
   {
     this.agencyService.getLinks(this.loggedInUser.UserID).subscribe((r)=>{
+      console.log(r);
       this.phoneLinks = r.filter((a:any)=>a.linktype == 'P');
       this.emailLinks = r.filter((a:any)=>a.linktype == 'E');
       this.webLinks = r.filter((a:any)=>a.linktype == 'W');

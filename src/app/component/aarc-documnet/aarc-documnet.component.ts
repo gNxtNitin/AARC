@@ -382,6 +382,7 @@ DocTypes = [
         this.showSupplemental = false;
         this.showMis = false;
         this.showGuideline = false;
+        this.loadDocx();
 
     } else {
       var filterItems = this.allDocx.filter((a:any)=>{ 
@@ -392,7 +393,6 @@ DocTypes = [
          this.AAIQuoteSheetsandChecklistsForms = filterItems.filter((a:any)=>a.doc_cat == 'D');
          this.AgencySpecificForms = filterItems.filter((a:any)=>a.doc_cat == 'E');
          this.billings = filterItems.filter((a:any)=>a.doc_cat == 'B');
-         debugger
          this.BasicAcordForms = filterItems.filter((a:any)=>a.doc_cat == 'F');
          this.CanineForms = filterItems.filter((a:any)=>a.doc_cat == 'H');
          this.CaqceForms = filterItems.filter((a:any)=>a.doc_cat == 'Q');
@@ -417,10 +417,10 @@ DocTypes = [
        this.showSurplusLinesForms = true;
        this.showWoodStoveForms = true;
        this.showWorkersCompensationForms = true;
-        this.showBilling = true;
-        this.showSupplemental = true;
-        this.showMis = true;
-        this.showGuideline = true;
+       this.showBilling = true;
+       this.showSupplemental = true;
+       this.showMis = true;
+       this.showGuideline = true;
     }
     
   }

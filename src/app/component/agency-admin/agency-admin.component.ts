@@ -215,10 +215,10 @@ export class AgencyAdminComponent implements OnInit {
   load(agency_id: string) {
     this.loadNewsEvent();
     this.loadTickers();
-    //this.loadAddress();
-    // this.agencyService.getAgencyById(agency_id).subscribe((response) => {
-    //   this.selectedAgency = response[0];
-    // });
+    this.loadAddress();
+    this.agencyService.getAgencyById(agency_id).subscribe((response) => {
+      this.selectedAgency = response[0];
+    });
 
     // this.agencyService.getCarrierByAgency(agency_id).subscribe((response) => {
     //   this.carriers = response;
