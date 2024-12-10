@@ -299,8 +299,8 @@
             <div *ngIf="carriers">
                 <div class="row detail-2 contact-header">
                     <div class="col-7">Carrier Name</div>
-                    <div class="col-2">View PC</div>
-                    <div class="col-3">Delete Carrier</div>
+                    <div class="col-2" *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'">View PC</div>
+                    <div class="col-3" *ngIf="loggedInUser['AASecLevel'] == 'ADMIN' || loggedInUser['AASecLevel'] == 'EXEC'">Delete Carrier</div>
                 </div>
 
                 <div class="row border-bottom py-2" *ngFor="let carrier of carriers">
