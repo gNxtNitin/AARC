@@ -17,40 +17,36 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 export class AarcDocumnetComponent implements OnInit {
 
   docLink = Constant.Doc_link
-  showAAI= false;
-  showAAIDwellingFire= false;
+  showAAI:boolean= false;
+  showAAIDwellingFire:boolean= false;
   aaiForms:any;
   AAIDwellingFireForms:any;
-  showAAIQuoteSheetsandChecklists= false;
+  showAAIQuoteSheetsandChecklists:boolean= false;
   AAIQuoteSheetsandChecklistsForms:any;
-  showAgencySpecific= false;
+  showAgencySpecific:boolean= false;
   AgencySpecificForms:any;
-  showBasicAcordForms= false;
+  showBasicAcordForms:boolean= false;
   BasicAcordForms:any;
-  showCanineForms= false;
+  showCanineForms:boolean= false;
   CanineForms:any;
-  showCaqceForms= false;
+  showCaqceForms:boolean= false;
   CaqceForms:any;
-  showDiscountsCreditsForms= false;
+  showDiscountsCreditsForms:boolean= false;
   DiscountsCreditsForms:any;
-  showMotorVehicleForms= false;
+  showMotorVehicleForms:boolean= false;
   MotorVehicleForms:any;
-  showSurplusLinesForms= false;
+  showSurplusLinesForms:boolean= false;
   SurplusLinesForms:any;
-  showWoodStoveForms= false;
+  showWoodStoveForms:boolean= false;
   WoodStoveForms:any;
-  showWorkersCompensationForms= false;
+  showWorkersCompensationForms:boolean= false;
   WorkersCompensationForms:any;
 
   loggedInUser:any;
-  showBilling = false;
+  showBilling:boolean= false;
   billings:any;
-  showSupplemental= false;
-  miscellaneous:any;
-  showMis = false;
-  showGuideline = false;
-  guidelines:any;
-  supplementForms:any;
+  miscellaneousForms:any;
+  showMis:boolean = false;
   modalRef:any;
   selectedDocType = '';
   PreselectedDocCat = '';
@@ -65,32 +61,30 @@ export class AarcDocumnetComponent implements OnInit {
   allDocx:any;
   pcModalRef:any;
 
-  DocTypes2 = [
-    {id: 'A' ,value:'Acord Forms'},
-    {id: 'B' ,value:'Billing'},
-    {id: 'Q' ,value:'Quote Sheets'},
-    {id: 'M' ,value:'Miscellaneous'},
-    {id: 'G' ,value:'Underwriting Guidelines'},
-    {id: 'S' ,value:'Supplemental Forms'},
-]
+//   DocTypes2 = [
+//     {id: 'A' ,value:'Acord Forms'},
+//     {id: 'B' ,value:'Billing'},
+//     {id: 'Q' ,value:'Quote Sheets'},
+//     {id: 'M' ,value:'Miscellaneous'},
+//     {id: 'G' ,value:'Underwriting Guidelines'},
+//     {id: 'S' ,value:'Supplemental Forms'},
+// ]
 
 DocTypes = [
-  {id: 'A' ,value:'AAI Forms'},
   {id: 'C' ,value:'AAI Dwelling Fire Forms'},
-  {id: 'D' ,value:'AAI Quote Sheets and Checklists'},
+  {id: 'A' ,value:'AAI Forms'},
+  {id: 'S' ,value:'AAI Quote Sheets and Checklists'},
   {id: 'E' ,value:'Agency Specific Forms'},
-  {id: 'B' ,value:'Billing Forms'},
   {id: 'F' ,value:'Basic Acord Forms'},
+  {id: 'B' ,value:'Billing Forms'},
   {id: 'H' ,value:'Canine Forms'},
   {id: 'Q' ,value:'Carrier Application, Quote Requests, Coverage and Exclusion Forms'},
   {id: 'I' ,value:'Discounts and Credits'},
   {id: 'M' ,value:'Miscellaneous'},
   {id: 'J' ,value:'Motor Vehicle Forms'},
-  {id: 'S' ,value:'Supplemental Forms'},
   {id: 'K' ,value:'Surplus Lines Forms'},
   {id: 'L' ,value:'Wood Stove Forms'},
-  {id: 'N' ,value:'Workers Compensation Forms'},
-  {id: 'G' ,value:'Underwriting Guidelines'},
+  {id: 'G' ,value:'Workers Compensation Forms'},
 ]
 
   constructor(private dataSharingService: DataSharingService,
@@ -113,6 +107,8 @@ DocTypes = [
 
   OpenEdit(contact: any, template: any) {
     debugger;
+    this.submitted = false;
+    this.selectedDocType ='';
     this.PreselectedDocCat=contact.doc_cat;
     this.PreselectedDocName=contact.doc_name;
     if(contact.doc_cat=="A")
@@ -123,7 +119,7 @@ DocTypes = [
     {
       this.CategoryFullName='AAI Dwelling Fire Forms'
     }
-    else if(contact.doc_cat=="D")
+    else if(contact.doc_cat=="S")
     {
       this.CategoryFullName='AAI Quote Sheets and Checklists'
     }
@@ -159,10 +155,6 @@ DocTypes = [
     {
       this.CategoryFullName='Motor Vehicle Forms'
     }
-    else if(contact.doc_cat=="S")
-    {
-      this.CategoryFullName='Supplemental Forms'
-    }
     else if(contact.doc_cat=="K")
     {
       this.CategoryFullName='Surplus Lines Forms'
@@ -171,13 +163,9 @@ DocTypes = [
     {
       this.CategoryFullName='Wood Stove Forms'
     }
-    else if(contact.doc_cat=="N")
-    {
-      this.CategoryFullName='Workers Compensation Forms'
-    }
     else if(contact.doc_cat=="G")
     {
-      this.CategoryFullName='Underwriting Guidelines'
+      this.CategoryFullName='Workers Compensation Forms'
     }
     else
     {
@@ -252,18 +240,9 @@ DocTypes = [
     this.showBilling = !this.showBilling;
   }
 
-  SupplementalClick()
-  {
-    this.showSupplemental = ! this.showSupplemental;
-  }
-
   MisclClick()
   {
     this.showMis = ! this.showMis;
-  }
-  GuideLineClick()
-  {
-    this.showGuideline = ! this.showGuideline;
   }
 
   loadDocx()
@@ -272,7 +251,7 @@ DocTypes = [
         this.allDocx = r;
         this.aaiForms = r.filter((a:any)=>a.doc_cat == 'A');
         this.AAIDwellingFireForms = r.filter((a:any)=>a.doc_cat == 'C');
-        this.AAIQuoteSheetsandChecklistsForms = r.filter((a:any)=>a.doc_cat == 'D');
+        this.AAIQuoteSheetsandChecklistsForms = r.filter((a:any)=>a.doc_cat == 'S');
         this.AgencySpecificForms = r.filter((a:any)=>a.doc_cat == 'E');
         this.billings = r.filter((a:any)=>a.doc_cat == 'B');
         this.BasicAcordForms = r.filter((a:any)=>a.doc_cat == 'F');
@@ -282,10 +261,8 @@ DocTypes = [
         this.MotorVehicleForms = r.filter((a:any)=>a.doc_cat == 'J');
         this.SurplusLinesForms = r.filter((a:any)=>a.doc_cat == 'k');
         this.WoodStoveForms = r.filter((a:any)=>a.doc_cat == 'L');
-        this.WorkersCompensationForms = r.filter((a:any)=>a.doc_cat == 'N');
-        this.miscellaneous = r.filter((a:any)=>a.doc_cat == 'M');
-        this.guidelines = r.filter((a:any)=>a.doc_cat == 'G');
-        this.supplementForms = r.filter((a:any)=>a.doc_cat == 'S');
+        this.WorkersCompensationForms = r.filter((a:any)=>a.doc_cat == 'G');
+        this.miscellaneousForms = r.filter((a:any)=>a.doc_cat == 'M');
     })
   }
 
@@ -305,7 +282,6 @@ DocTypes = [
     this.modalRef.content.onClose.subscribe((result: boolean) => {
       if (result) {
         this.agencyService.deleteDocx(doc.doc_name,doc.doc_cat).subscribe((r:any)=>{
-          console.log(r);
           this.toastService.showSuccess("Document deleted successfully", "Success");
           this.loadDocx();
          })
@@ -328,7 +304,6 @@ DocTypes = [
     const file = target.files.item(0);
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    console.log(file);
     this.selectedFile ['file'] =  file;
     reader.onload = () => {
       this.selectedFile ['data'] = (reader.result as string).split(",")[1];
@@ -363,66 +338,107 @@ DocTypes = [
 
   searchDocument(event: any)
   {
-    var txt = event.target.value;
-    console.log(txt);
-    if(txt == '') {
+        var txt = event.target.value;
+        
         this.showAAI = false;
         this.showAAIDwellingFire = false;
         this.showAAIQuoteSheetsandChecklists = false;
         this.showAgencySpecific = false;
-        this.BasicAcordForms = false;
-        this.CanineForms = false;
-        this.CaqceForms = false;
-        this.DiscountsCreditsForms = false;
+        this.showBasicAcordForms = false;
+        this.showCanineForms = false;
+        this.showCaqceForms = false;
+        this.showDiscountsCreditsForms = false;
         this.showMotorVehicleForms = false;
         this.showSurplusLinesForms = false;
         this.showWoodStoveForms = false;
         this.showWorkersCompensationForms = false;
         this.showBilling = false;
-        this.showSupplemental = false;
         this.showMis = false;
-        this.showGuideline = false;
+
+        if(txt == '') {
         this.loadDocx();
+        } 
+        else {
+        var filterItems = this.allDocx.filter((a:any)=>{ 
+        return a.doc_name.toLowerCase().includes(txt.toLowerCase())});
+        if(filterItems.length<1)
+        {
+         this.loadDocx();
+         filterItems = this.allDocx.filter((a:any)=>{ 
+           return a.doc_name.toLowerCase().includes(txt.toLowerCase())});
+        }
 
-    } else {
-      var filterItems = this.allDocx.filter((a:any)=>{ 
-         return a.doc_name.toLowerCase().includes(txt.toLowerCase())});
-
-         this.aaiForms = filterItems.filter((a:any)=>a.doc_cat == 'A');
-         this.AAIDwellingFireForms = filterItems.filter((a:any)=>a.doc_cat == 'C');
-         this.AAIQuoteSheetsandChecklistsForms = filterItems.filter((a:any)=>a.doc_cat == 'D');
-         this.AgencySpecificForms = filterItems.filter((a:any)=>a.doc_cat == 'E');
-         this.billings = filterItems.filter((a:any)=>a.doc_cat == 'B');
-         this.BasicAcordForms = filterItems.filter((a:any)=>a.doc_cat == 'F');
-         this.CanineForms = filterItems.filter((a:any)=>a.doc_cat == 'H');
-         this.CaqceForms = filterItems.filter((a:any)=>a.doc_cat == 'Q');
-         this.DiscountsCreditsForms = filterItems.filter((a:any)=>a.doc_cat == 'I');
-         this.MotorVehicleForms = filterItems.filter((a:any)=>a.doc_cat == 'J');
-         this.SurplusLinesForms = filterItems.filter((a:any)=>a.doc_cat == 'J');
-         this.WoodStoveForms = filterItems.filter((a:any)=>a.doc_cat == 'L');
-         this.WorkersCompensationForms = filterItems.filter((a:any)=>a.doc_cat == 'N');
-         this.miscellaneous = filterItems.filter((a:any)=>a.doc_cat == 'M');
-         this.guidelines = filterItems.filter((a:any)=>a.doc_cat == 'G');
-         this.supplementForms = filterItems.filter((a:any)=>a.doc_cat == 'S');
-
-       this.showAAI = true;
-       this.showAAIDwellingFire = true;
-       this.showAAIQuoteSheetsandChecklists = true;
-       this.showAgencySpecific = true;
-       this.BasicAcordForms = true;
-       this.CanineForms = true;
-       this.CaqceForms = true;
-       this.DiscountsCreditsForms = true;
-       this.showMotorVehicleForms = true;
-       this.showSurplusLinesForms = true;
-       this.showWoodStoveForms = true;
-       this.showWorkersCompensationForms = true;
-       this.showBilling = true;
-       this.showSupplemental = true;
-       this.showMis = true;
-       this.showGuideline = true;
-    }
-    
+        this.aaiForms = filterItems.filter((a:any)=>a.doc_cat == 'A');
+        if(this.aaiForms.length>0)
+        {
+           this.showAAI = true;
+        }
+        this.AAIDwellingFireForms = filterItems.filter((a:any)=>a.doc_cat == 'C');
+        if(this.AAIDwellingFireForms.length>0)
+        {
+         this.showAAIDwellingFire = true;
+        }
+        this.AAIQuoteSheetsandChecklistsForms = filterItems.filter((a:any)=>a.doc_cat == 'S');
+        if(this.AAIQuoteSheetsandChecklistsForms.length>0)
+         {
+           this.showAAIQuoteSheetsandChecklists = true;
+         }
+        this.AgencySpecificForms = filterItems.filter((a:any)=>a.doc_cat == 'E');
+        if(this.AgencySpecificForms.length>0)
+         {
+           this.showAgencySpecific = true;
+         }
+        this.billings = filterItems.filter((a:any)=>a.doc_cat == 'B');
+        if(this.billings.length>0)
+         {
+           this.showBilling = true;
+         }
+        this.BasicAcordForms = filterItems.filter((a:any)=>a.doc_cat == 'F');
+        if(this.BasicAcordForms.length>0)
+         {
+           this.showBasicAcordForms = true;
+         }
+        this.CanineForms = filterItems.filter((a:any)=>a.doc_cat == 'H');
+        if(this.CanineForms.length>0)
+         {
+           this.showCanineForms = true;
+         }
+        this.CaqceForms = filterItems.filter((a:any)=>a.doc_cat == 'Q');
+        if(this.CaqceForms.length>0)
+         {
+           this.showCaqceForms = true;
+         }
+        this.DiscountsCreditsForms = filterItems.filter((a:any)=>a.doc_cat == 'I');
+        if(this.DiscountsCreditsForms.length>0)
+         {
+           this.showDiscountsCreditsForms = true;
+         }
+        this.MotorVehicleForms = filterItems.filter((a:any)=>a.doc_cat == 'J');
+        if(this.MotorVehicleForms.length>0)
+         {
+           this.showMotorVehicleForms = true;
+         }
+        this.SurplusLinesForms = filterItems.filter((a:any)=>a.doc_cat == 'J');
+        if(this.SurplusLinesForms.length>0)
+         {
+           this.showSurplusLinesForms = true;
+         }
+        this.WoodStoveForms = filterItems.filter((a:any)=>a.doc_cat == 'L');
+        if(this.WoodStoveForms.length>0)
+         {
+           this.showWoodStoveForms = true;
+         }
+        this.WorkersCompensationForms = filterItems.filter((a:any)=>a.doc_cat == 'G');
+        if(this.WorkersCompensationForms.length>0)
+         {
+           this.showWorkersCompensationForms = true;
+         }
+        this.miscellaneousForms = filterItems.filter((a:any)=>a.doc_cat == 'M');
+        if(this.miscellaneousForms.length>0)
+         {
+           this.showMis = true;
+         }
+    } 
   }
 
   UpdateDocumentCategory()
@@ -431,7 +447,7 @@ DocTypes = [
     this.submitted = true;
     if(this.selectedDocType == '' || this.selectedDocType == undefined)
     {
-      this.toastService.showError("Please New Category","Error");
+      this.toastService.showError("Please Select a Category","Error");
       return;
     }
     var OldCategoryCode = this.PreselectedDocCat;
@@ -451,7 +467,7 @@ DocTypes = [
       {
         this.showAAIDwellingFire = !this.showAAIDwellingFire;
       }
-      else if(OldCategoryCode=="D")
+      else if(OldCategoryCode=="S")
       {
         this.showAAIQuoteSheetsandChecklists = !this.showAAIQuoteSheetsandChecklists;
       }
@@ -491,21 +507,13 @@ DocTypes = [
       {
         this.showWoodStoveForms = !this.showWoodStoveForms;
       }
-      else if(OldCategoryCode=="N")
+      else if(OldCategoryCode=="G")
       {
         this.showWorkersCompensationForms = !this.showWorkersCompensationForms;
       }
       else if(OldCategoryCode=="M")
       {
         this.showMis = ! this.showMis;
-      }
-      else if(OldCategoryCode=="G")
-      {
-        this.showGuideline = ! this.showGuideline;
-      }
-      else if(OldCategoryCode=="S")
-      {
-        this.showSupplemental = ! this.showSupplemental;
       }
      this.pcModalRef.hide();
      this.loadDocx();

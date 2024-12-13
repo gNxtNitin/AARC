@@ -309,15 +309,37 @@ export class UserInfoComponent implements OnInit {
       let carrierID = this.dataSharingService.selectedCarrier.carrier_id.toString();
       let producerCode = this.producercode;
       let branchCode = this.branchCode;
+      let UserType = "";
+      if(this.branchCode=="A")
+      {
+        UserType="Admin";
+      }
+      else if(this.branchCode=="C")
+      {
+        UserType="Commercial";
+      }
+      else if(this.branchCode=="P")
+      {
+        UserType="Personal";
+      }
+      else if(this.branchCode=="B")
+      {
+        UserType="Both";
+      }
+      else
+      {
+        UserType="";
+      }
       
       let oldPassword = this.userPW;
       let newPassword = this.upf.NewPassword.value;
 
       let emailsubject = FirstName +" "+LastName +" "+"["+loggedinUserTeamName+"]"+" "+ "updated the password for "+AgencyName+" – "+CarrierName+"";
 
-      let emailBody = "<table><tr><td>Old Password :</td><td>"+oldPassword+"</td></tr>";
-      emailBody += "<tr><td>New Password :</td><td> "+newPassword+"</td></tr></table>";
-      emailBody += "<tr><td>Team :</td><td> "+loggedinUserTeamName+"</td></tr></table>";
+      let emailBody = "<table><tr><td>Old Password : "+oldPassword+"</td></tr>";
+      emailBody += "<tr><td>New Password : "+newPassword+"</td></tr>";
+      emailBody += "<tr><td>Team : "+loggedinUserTeamName+"</td></tr>";
+      emailBody += "<tr><td>Type : "+UserType+"</td></tr></table>";
 
       this.userService
         .UpdatePasswordEmail({emailid,emailsubject,emailBody,agencyID,carrierID,loggedinUserid,newPassword,producerCode,branchCode})
