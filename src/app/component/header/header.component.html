@@ -159,11 +159,11 @@
             <div class="column" style="width: 70%; height: auto;">
               <table>
               <tr>
-              <td>{{outlist.id}} . {{outlist.name}} ({{outlist.employeeId}})</td>
+              <td>{{outlist.ID}} . {{outlist.DisplayName}}</td>
               </tr>
-              <!-- <tr>
-              <td *ngIf="outlist.showDate">Out until {{outlist.outUntilMessage}}</td>
-              </tr> -->
+              <tr>
+              <td><span style="opacity: 0;">{{outlist.ID}} .</span> {{outlist.Message}}</td>
+              </tr>
               </table>
             </div>
           </div>
