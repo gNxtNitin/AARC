@@ -259,7 +259,7 @@ DocTypes = [
         this.CaqceForms = r.filter((a:any)=>a.doc_cat == 'Q');
         this.DiscountsCreditsForms = r.filter((a:any)=>a.doc_cat == 'I');
         this.MotorVehicleForms = r.filter((a:any)=>a.doc_cat == 'J');
-        this.SurplusLinesForms = r.filter((a:any)=>a.doc_cat == 'k');
+        this.SurplusLinesForms = r.filter((a:any)=>a.doc_cat == 'K');
         this.WoodStoveForms = r.filter((a:any)=>a.doc_cat == 'L');
         this.WorkersCompensationForms = r.filter((a:any)=>a.doc_cat == 'G');
         this.miscellaneousForms = r.filter((a:any)=>a.doc_cat == 'M');
@@ -268,6 +268,8 @@ DocTypes = [
 
   AddDocument(template:any)
   {
+    this.submitted = false;
+    this.selectedDocType ='';
     this.modalRef = this.modalService.show(template, {backdrop: 'static'});
   }
   Deletedocx(doc:any)
@@ -290,6 +292,8 @@ DocTypes = [
   }
   close()
   {
+    this.submitted = false;
+    this.selectedDocType ='';
     this.modalRef.hide();
   }
 
@@ -330,10 +334,13 @@ DocTypes = [
       Attachment: this.selectedFile ['data'],
       AttachmentFilename:this.selectedFile['file']['name']
     }).subscribe((r:any)=>{
+      this.toastService.showSuccess("New Document Added Successfully.", "Success");
      this.modalRef.hide();
      this.loadDocx();
 
     });
+    this.submitted = false;
+    this.selectedDocType ='';
   }
 
   searchDocument(event: any)
@@ -418,7 +425,7 @@ DocTypes = [
          {
            this.showMotorVehicleForms = true;
          }
-        this.SurplusLinesForms = filterItems.filter((a:any)=>a.doc_cat == 'J');
+        this.SurplusLinesForms = filterItems.filter((a:any)=>a.doc_cat == 'K');
         if(this.SurplusLinesForms.length>0)
          {
            this.showSurplusLinesForms = true;
