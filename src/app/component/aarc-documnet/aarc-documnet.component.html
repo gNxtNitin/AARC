@@ -120,7 +120,7 @@
                 <div class="col-2" *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'">Edit</div>
                 <div class="col-2" *ngIf="loggedInUser['AASecLevel'] == 'ADMIN'">Delete</div>
             </div>
-            <div class="row" *ngFor="let aaiqa of AAIQuoteSheetsandChecklistsForms">
+            <div class="row" *ngFor="let aaiqa of AgencySpecificForms">
                 <div class="col-md-8 col-sm-8 col-12">
                     <a class="detail-1" href="{{docLink + aaiqa.doc_name}}" target="_blank">{{aaiqa.doc_name}}</a>
                 </div>
